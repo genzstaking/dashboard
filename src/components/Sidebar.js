@@ -55,10 +55,10 @@ export class Sidebar extends Component {
 			<t t-set-slot="content">
 				<div class="bg-white py-2 collapse-inner rounded">
 					<h6 class="collapse-header">Custom Utilities:</h6>
-					<a class="collapse-item" href="utilities-color.html">Colors</a>
-					<a class="collapse-item" href="utilities-border.html">Borders</a>
-					<a class="collapse-item" href="utilities-animation.html">Animations</a>
-					<a class="collapse-item" href="utilities-other.html">Other</a>
+					<a class="collapse-item" href="#/utilities-color">Colors</a>
+					<a class="collapse-item" href="#/utilities-border">Borders</a>
+					<a class="collapse-item" href="#/utilities-animation">Animations</a>
+					<a class="collapse-item" href="#/utilities-other">Other</a>
 				</div>
 			</t>
 		</SidebarCollapse>

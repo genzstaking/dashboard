@@ -11,7 +11,10 @@ import { ChartPage } from "./pages/ChartPage";
 import { TablesPage } from "./pages/TablesPage";
 import { ButtonsPage } from "./pages/ButtonsPage";
 import { CardsPage } from "./pages/CardsPage";
-
+import { UtilitiesAnimationPage } from "./pages/UtilitiesAnimationPage";
+import { UtilitiesBorderPage } from "./pages/UtilitiesBorderPage";
+import { UtilitiesColorPage } from "./pages/UtilitiesColorPage";
+import { UtilitiesOtherPage } from "./pages/UtilitiesOtherPage";
 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
@@ -63,6 +66,18 @@ export class Root extends Component {
 		},
 		'/cards': {
 			component: CardsPage
+		},
+		'/utilities-animation': {
+			component: UtilitiesAnimationPage
+		},
+		'/utilities-border': {
+			component: UtilitiesBorderPage
+		},
+		'/utilities-color': {
+			component: UtilitiesColorPage
+		},
+		'/utilities-other': {
+			component: UtilitiesOtherPage
 		}
 	};
 
