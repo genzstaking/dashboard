@@ -27,7 +27,7 @@ export class SidebarCollapse extends Component {
 
 
 	setup() {
-		this.id = uuidv4().replaceAll('\-', '_');
-		this.sid = "#" + this.id;
+		this.id = 'collapse' + uuidv4().replaceAll('\-', '');
+		this.sid = '#' + this.id;
 	}
 }
