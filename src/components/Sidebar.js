@@ -3,6 +3,7 @@ import { SidebarBrand } from "./widgets/SidebarBrand";
 import { SidebarDivider } from "./widgets/SidebarDivider";
 import { SidebarLink } from "./widgets/SidebarLink";
 import { SidebarMessage } from "./widgets/SidebarMessage";
+import { SidebarHeading } from "./widgets/SidebarHeading";
 
 
 export class Sidebar extends Component {
@@ -11,6 +12,7 @@ export class Sidebar extends Component {
 		SidebarDivider,
 		SidebarLink,
 		SidebarMessage,
+		SidebarHeading,
 	};
 
 	static template = xml`
@@ -28,12 +30,9 @@ export class Sidebar extends Component {
 			<i class="fas fa-fw fa-tachometer-alt"></i>
 			<span>Wallets</span>
 		</SidebarLink>
+		
 		<SidebarDivider />
-
-		<!-- Heading -->
-		<div class="sidebar-heading">
-			Interface
-		</div>
+		<SidebarHeading>Interface</SidebarHeading>
 
 		<!-- Nav Item - Pages Collapse Menu -->
 		<li class="nav-item">
@@ -71,11 +70,8 @@ export class Sidebar extends Component {
 		</li>
 
 		<SidebarDivider />
+		<SidebarHeading>Addons</SidebarHeading>
 
-		<!-- Heading -->
-		<div class="sidebar-heading">
-			Addons
-		</div>
 
 		<!-- Nav Item - Pages Collapse Menu -->
 		<li class="nav-item">

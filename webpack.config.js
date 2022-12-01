@@ -14,6 +14,16 @@ module.exports = function(env, argv) {
 		},
 		module: {
 			rules: [{
+				test: /img\/.*\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+				exclude: /node_modules/,
+				use: [{
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: 'img/'
+					},
+				}]
+			}, {
 				test: /\.jsx?$/,
 				loader: "babel-loader",
 				exclude: /node_modules/,

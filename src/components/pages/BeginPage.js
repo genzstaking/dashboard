@@ -3,6 +3,13 @@ import { OChart } from "../widgets/OChart";
 
 import { CHART_DATA } from "./ChartPage";
 
+import img01 from "./img/undraw_posting_photo.svg";
+import img02 from "./img/undraw_profile_1.svg";
+import img03 from "./img/undraw_profile_2.svg";
+import img04 from "./img/undraw_profile_3.svg";
+import img05 from "./img/undraw_profile.svg";
+import img06 from "./img/undraw_rocket.svg";
+
 export class BeginPage extends Component {
 	static components = {
 		OChart,
