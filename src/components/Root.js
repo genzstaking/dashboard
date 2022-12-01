@@ -9,6 +9,8 @@ import { BeginPage } from "./pages/BeginPage";
 import { WalletsPage } from "./pages/WalletsPage";
 import { ChartPage } from "./pages/ChartPage";
 import { TablesPage } from "./pages/TablesPage";
+import { ButtonsPage } from "./pages/ButtonsPage";
+
 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
@@ -44,20 +46,19 @@ export class Root extends Component {
 	routeType = 'hash';
 	routes = {
 		'/': {
-			name: "Dashboard",
 			component: BeginPage
 		},
 		'/wallets': {
-			name: "Wallets",
 			component: WalletsPage
 		},
 		'/charts': {
-			name: 'Charts',
 			component: ChartPage
 		},
-		'/tables':{
-			name: 'Tables',
+		'/tables': {
 			component: TablesPage
+		},
+		'/buttons': {
+			component: ButtonsPage
 		}
 	};
 
