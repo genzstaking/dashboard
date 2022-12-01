@@ -43,7 +43,7 @@ export class Sidebar extends Component {
 				<div class="bg-white py-2 collapse-inner rounded">
 					<h6 class="collapse-header">Custom Components:</h6>
 					<a class="collapse-item" href="#/buttons">Buttons</a>
-					<a class="collapse-item" href="#/cards">Cards</a>
+					<a class="collapse-item" href="	s">Cards</a>
 				</div>
 			</t>
 		</SidebarCollapse>

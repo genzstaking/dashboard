@@ -10,6 +10,7 @@ import { WalletsPage } from "./pages/WalletsPage";
 import { ChartPage } from "./pages/ChartPage";
 import { TablesPage } from "./pages/TablesPage";
 import { ButtonsPage } from "./pages/ButtonsPage";
+import { CardsPage } from "./pages/CardsPage";
 
 
 const ROOT_TEMPLATE = xml`
@@ -59,6 +60,9 @@ export class Root extends Component {
 		},
 		'/buttons': {
 			component: ButtonsPage
+		},
+		'/cards': {
+			component: CardsPage
 		}
 	};
 
