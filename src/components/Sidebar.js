@@ -68,7 +68,7 @@ export class Sidebar extends Component {
 		<SidebarCollapse>
 			<t t-set-slot="title">
 				<i class="fas fa-fw fa-folder"></i>
-				<span>Pages</span>
+				<span>Dialogs</span>
 			</t>
 			<t t-set-slot="content">
 				<div class="bg-white py-2 collapse-inner rounded">
