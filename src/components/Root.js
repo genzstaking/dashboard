@@ -6,7 +6,9 @@ import { Router } from "./Router";
 
 
 import { BeginPage } from "./pages/BeginPage";
-import { WalletsPage } from "./pages/WalletsPage"
+import { WalletsPage } from "./pages/WalletsPage";
+import { ChartPage } from "./pages/ChartPage";
+import { TablesPage } from "./pages/TablesPage";
 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
@@ -49,6 +51,14 @@ export class Root extends Component {
 			name: "Wallets",
 			component: WalletsPage
 		},
+		'/charts': {
+			name: 'Charts',
+			component: ChartPage
+		},
+		'/tables':{
+			name: 'Tables',
+			component: TablesPage
+		}
 	};
 
 	update() {

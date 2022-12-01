@@ -98,19 +98,16 @@ export class Sidebar extends Component {
 			</div>
 		</li>
 
-		<!-- Nav Item - Charts -->
-		<li class="nav-item">
-			<a class="nav-link" href="charts.html">
-				<i class="fas fa-fw fa-chart-area"></i>
-				<span>Charts</span></a>
-		</li>
-
-		<!-- Nav Item - Tables -->
-		<li class="nav-item">
-			<a class="nav-link" href="tables.html">
-				<i class="fas fa-fw fa-table"></i>
-				<span>Tables</span></a>
-		</li>
+		<SidebarLink
+			href="'#/charts'">
+			<i class="fas fa-fw fa-chart-area"></i>
+			<span>Charts</span>
+		</SidebarLink>
+		<SidebarLink
+			href="'#/tables'">
+			<i class="fas fa-fw fa-table"></i>
+			<span>Tables</span>
+		</SidebarLink>
 
 		<!-- Divider 2 -->
 		<hr class="sidebar-divider d-none d-md-block" />
@@ -124,11 +121,11 @@ export class Sidebar extends Component {
 			<img 
 				class="sidebar-card-illustration mb-2" 
 				src="img/undraw_rocket.svg" 
-				alt="..." />
-			<p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+				alt="Stack with GenZ Staking" />
+			<p class="text-center mb-2"><strong>GenZ Staking</strong> group supports with premium features, partnership program, and more!</p>
 			<a 
 				class="btn btn-success btn-sm" 
-				href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+				href="//genzstaking.com/">Stake With Us!</a>
 		</SidebarMessage>
 
 	</ul>
