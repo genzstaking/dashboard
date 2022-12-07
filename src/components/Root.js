@@ -15,6 +15,7 @@ import { UtilitiesAnimationPage } from "./pages/UtilitiesAnimationPage";
 import { UtilitiesBorderPage } from "./pages/UtilitiesBorderPage";
 import { UtilitiesColorPage } from "./pages/UtilitiesColorPage";
 import { UtilitiesOtherPage } from "./pages/UtilitiesOtherPage";
+import { AccountsPage } from "./pages/AccountsPage";
 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
@@ -78,6 +79,9 @@ export class Root extends Component {
 		},
 		'/utilities-other': {
 			component: UtilitiesOtherPage
+		},
+		'/accounts': {
+			component: AccountsPage
 		}
 	};
 
