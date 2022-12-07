@@ -22,15 +22,11 @@ export class Sidebar extends Component {
 		<SidebarBrand />
 		<SidebarDivider />
 		<SidebarLink
-			href="'#/'">
+			href="'#/accounts'">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
-			<span>Dashboard</span>
+			<span>accounts</span>
 		</SidebarLink>
-		<SidebarLink
-			href="'#/wallets'">
-			<i class="fas fa-fw fa-tachometer-alt"></i>
-			<span>Wallets</span>
-		</SidebarLink>
+		
 		
 		<SidebarDivider />
 		<SidebarHeading>Interface</SidebarHeading>
@@ -83,16 +79,7 @@ export class Sidebar extends Component {
 				</div>
 			</t>
 		</SidebarCollapse>
-		<SidebarLink
-			href="'#/charts'">
-			<i class="fas fa-fw fa-chart-area"></i>
-			<span>Charts</span>
-		</SidebarLink>
-		<SidebarLink
-			href="'#/tables'">
-			<i class="fas fa-fw fa-table"></i>
-			<span>Tables</span>
-		</SidebarLink>
+		
 
 		<SidebarDivider />
 		<!-- Sidebar Toggler (Sidebar) -->
