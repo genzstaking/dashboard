@@ -3,6 +3,6 @@ import { xml } from "@odoo/owl";
 
 export class AccountsPage extends Component{
     static template = xml `
-        HELLO WORLD
+        <button class="primary">info</button>
     `;
 }
