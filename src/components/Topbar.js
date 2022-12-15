@@ -4,7 +4,7 @@ import Web3 from "web3";
 
 export class Topbar extends Component {
 
-	static template = xml`
+    static template = xml`
     <nav class="navbar justify-content-between navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
         <!--  -->
@@ -63,20 +63,18 @@ export class Topbar extends Component {
         </div>
     `;
 
-    connectToMetamask(){
-        // const Web3 = require("web3");
-        const ethEnabled = async () => {
+    connectToMetamask() {
         if (window.ethereum) {
-            await window.ethereum.request({method: 'eth_requestAccounts'});
-            window.web3 = new Web3(window.ethereum);
-            return true;
-        }
-        return false;
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then(() => {
+                    window.web3 = new Web3(window.ethereum);
+                    return true;
+                });
         }
     };
-	state = useState({ text: "Owl" });
+    state = useState({ text: "Owl" });
 
-	update() {
-		this.state.text = this.state.text === "Owl" ? "World" : "Owl";
-	}
+    update() {
+        this.state.text = this.state.text === "Owl" ? "World" : "Owl";
+    }
 }
