@@ -1,5 +1,6 @@
 import { Component, xml, useState } from "@odoo/owl";
-import metamaskIcon from "./img/MetaMaskIcon.svg"
+import metamaskIcon from "./img/MetaMaskIcon.svg";
+import Web3 from "web3";
 
 export class Topbar extends Component {
 
@@ -31,14 +32,25 @@ export class Topbar extends Component {
             </div>
 
             <!-- Modal body -->
-            <div class="modal-body ">
-                <div class="card border-5 text-center my-4 mx-5" >
-                    <img src="${metamaskIcon}" class="card-img-top" alt="meta mask logo"/>
+            <div class="modal-body d-flex">
+                <!-- card1 -->
+                <div class="card border-5 text-center my-4 mx-2" >
+                    <img src="${metamaskIcon}" class="card-img-top w-25 mx-auto" alt="meta mask logo"/>
                     
                     <div class="card-body">
                         <h5 class="card-title text-dark my-5">Metamask</h5>
                         <p class="card-text"></p>
-                        <a href="#" class="btn btn-info text-white w-75">Connect</a>
+                        <a  class="btn btn-info text-white w-75" t-on-click="connectToMetamask">Connect</a>
+                    </div>
+                </div>
+                <!-- card2 -->
+                <div class="card border-5 text-center my-4 mx-2" >
+                    <img src="${metamaskIcon}" class="card-img-top w-25 mx-auto" alt="meta mask logo"/>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-dark my-5">Coinwallet</h5>
+                        <p class="card-text"></p>
+                        <a href="#" class="btn btn-info text-white w-75 disabled">Connect</a>
                     </div>
                 </div>
             </div>
@@ -51,8 +63,16 @@ export class Topbar extends Component {
         </div>
     `;
 
-    openTopBarModal(){
-
+    connectToMetamask(){
+        // const Web3 = require("web3");
+        const ethEnabled = async () => {
+        if (window.ethereum) {
+            await window.ethereum.request({method: 'eth_requestAccounts'});
+            window.web3 = new Web3(window.ethereum);
+            return true;
+        }
+        return false;
+        }
     };
 	state = useState({ text: "Owl" });
 
