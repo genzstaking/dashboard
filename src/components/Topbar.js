@@ -10,8 +10,11 @@ export class Topbar extends Component {
 
         <!--  -->
         <img alt="logo"/>
-        <button class="btn btn-info text-white rounded-pill " t-on-click="openTopBarModal" data-bs-toggle="modal" data-bs-target="#TopBarModal">
+        <button class="btn btn-info text-white rounded-pill " t-if="state.metaMaskIsInstalled | state.coinBaseIsInstalled"  data-bs-toggle="modal" data-bs-target="#TopBarModal">
             unlock wallet
+        </button>
+        <button class="btn btn-warning text-white rounded-pill " t-if="!(state.metaMaskIsInstalled | state.coinBaseIsInstalled)" data-bs-toggle="modal" data-bs-target="#TopBarModal">
+            install wallet
         </button>
         
        
@@ -36,23 +39,27 @@ export class Topbar extends Component {
             <div class="modal-body d-flex  flex-column flex-md-row">
                 <!-- card1 -->
                 <div class="card border-5 text-center my-4 mx-2" >
-                    <img src="${metamaskIcon}" class="card-img-top w-25 mx-auto pt-2" alt="meta mask logo"/>
+                    <img src="${metamaskIcon}" class="card-img-top w-25 h-25 mx-auto pt-4" alt="meta mask logo"/>
                     
                     <div class="card-body">
                         <h5 class="card-title text-dark my-5">Metamask</h5>
                         <p class="card-text"></p>
-                        <a  class="btn btn-info text-white w-75" t-on-click="connectToMetamask">Connect</a>
-                    </div>
+                        <a  class="btn btn-info text-white w-75" t-if="state.metaMaskIsInstalled" t-on-click="connectToMetamask">Connect</a>
+                        <a href="https://metamask.io/download/" class="btn btn-warning text-white w-75" t-if="!state.metaMaskIsInstalled" >Install</a>
+
+                        </div>
                 </div>
                 <!-- card2 -->
                 <div class="card border-5 text-center my-4 mx-2" >
-                    <img src="${coinbase}" class="card-img-top w-25 mx-auto pt-4" alt="meta mask logo"/>
+                    <img src="${coinbase}" class="card-img-top w-25 h-25 mx-auto pt-4" alt="meta mask logo"/>
                     
                     <div class="card-body">
                         <h5 class="card-title text-dark my-5">Coinwallet</h5>
                         <p class="card-text"></p>
-                        <a class="btn btn-info text-white w-75 disabled">Connect</a>
-                    </div>
+                        <a class="btn btn-info text-white w-75" t-if="state.coinBaseIsInstalled">Connect</a>
+                        <a href="https://www.coinbase.com/" class="btn btn-warning text-white w-75" t-if="!state.coinBaseIsInstalled" >Install</a>
+
+                        </div>
                 </div>
             </div>
 
@@ -63,7 +70,19 @@ export class Topbar extends Component {
         </div>
         </div>
     `;
-
+    state = useState({ 
+        text: "Owl",
+        metaMaskIsInstalled: false,
+        coinBaseIsInstalled: false,
+    });
+    setup(){
+        if (window.ethereum && window.ethereum.isMetaMask){
+            this.state.metaMaskIsInstalled = true;
+        }
+        if (window.ethereum && window.ethereum.isCoinbaseWallet){
+            this.state.coinBaseIsInstalled = true;
+        }
+    };
     connectToMetamask() {
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -73,7 +92,7 @@ export class Topbar extends Component {
                 });
         }
     };
-    state = useState({ text: "Owl" });
+   
 
     update() {
         this.state.text = this.state.text === "Owl" ? "World" : "Owl";
