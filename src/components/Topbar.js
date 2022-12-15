@@ -1,5 +1,5 @@
 import { Component, xml, useState } from "@odoo/owl";
-import metamaskIcon from "../components/images/MetaMaskIcon.svg"
+import metamaskIcon from "./img/MetaMaskIcon.svg"
 
 export class Topbar extends Component {
 
