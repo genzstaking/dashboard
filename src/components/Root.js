@@ -16,6 +16,7 @@ import { UtilitiesBorderPage } from "./pages/UtilitiesBorderPage";
 import { UtilitiesColorPage } from "./pages/UtilitiesColorPage";
 import { UtilitiesOtherPage } from "./pages/UtilitiesOtherPage";
 import { AccountsPage } from "./pages/AccountsPage";
+import { CscStakingPage } from "./pages/CscPages";
 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
@@ -82,6 +83,9 @@ export class Root extends Component {
 		},
 		'/accounts': {
 			component: AccountsPage
+		},
+		'/csc/staking': {
+			component: CscStakingPage
 		}
 	};
 

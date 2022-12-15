@@ -26,6 +26,11 @@ export class Sidebar extends Component {
 			<i class="fas fa-fw fa-tachometer-alt"></i>
 			<span>accounts</span>
 		</SidebarLink>
+		<SidebarLink
+			href="'#/csc/staking'">
+			<i class="fas fa-fw fa-tachometer-alt"></i>
+			<span>Coinex Smart Coin</span>
+		</SidebarLink>
 		
 		
 		<SidebarDivider />
