@@ -3,7 +3,7 @@ import { Component, xml, useState } from "@odoo/owl";
 import img06 from "./csc-img/csc.svg";
 import Web3 from 'web3'
 
-  
+
 
 var account = null
 var contract = null
@@ -895,40 +895,40 @@ const cetABI = [
 ]
 const cetContract = "0x0000000000000000000000000000000000001000"
 
-async function connectwallet() { 
+async function connectwallet() {
     var provider = window.ethereum;
-    var web3 = new Web3(provider); 
-    await provider.send('eth_requestAccounts'); 
-    var accounts = await web3.eth.getAccounts(); 
-    account = accounts[0]; 
+    var web3 = new Web3(provider);
+    await provider.send('eth_requestAccounts');
+    var accounts = await web3.eth.getAccounts();
+    account = accounts[0];
 
-	//check if network is right
-	let chainId = await window.ethereum.request({method: "eth_chainId"})
-	const CSCtest = '0x35'
-	if (chainId !== CSCtest) {
-		try {
-			await window.ethereum.request({
-				method: 'wallet_switchEthereumChain',
-				params: [{chainId: CSCtest}],
-			})
-		} catch (err) {
-			console.log(err)
-			err.value = 'You are not connected to the csc Test Network!'
-		}
-	}
-     contract = await new web3.eth.Contract(cetABI, "0x0000000000000000000000000000000000001000");
+    //check if network is right
+    let chainId = await window.ethereum.request({ method: "eth_chainId" })
+    const CSCtest = '0x35'
+    if (chainId !== CSCtest) {
+        try {
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: CSCtest }],
+            })
+        } catch (err) {
+            console.log(err)
+            err.value = 'You are not connected to the csc Test Network!'
+        }
+    }
+    contract = await new web3.eth.Contract(cetABI, "0x0000000000000000000000000000000000001000");
 }
 
 async function mint() {
-    var _mintAmount = Number(5); 
-    var mintRate = Number(await contract.methods.cost().call()); 
-    var totalAmount = mintRate * _mintAmount; 
-  	contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount) }); 
-} 
+    var _mintAmount = Number(5);
+    var mintRate = Number(await contract.methods.cost().call());
+    var totalAmount = mintRate * _mintAmount;
+    contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount) });
+}
 
 
 export class CscStakingPage extends Component {
-	static template = xml`
+    static template = xml`
 	<div class="container-fluid">
 		<div class="row d-flex flex-column justify-content-center align-items-center">
 			<img class="figure-img img-fluid" 
@@ -1034,16 +1034,24 @@ export class CscStakingPage extends Component {
 
 	</div>
 	`;
-	async stakeit() {
-		await connectwallet();
-		console.log("contract", contract)
-		var verifierAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
-		contract.handleRevert = true
-		contract.methods.stake(verifierAddress).send({from: account});
-		contract.handleRevert = false
-		}
-		
+    async stakeit() {
+        await connectwallet();
+        console.log("contract", contract)
+        var verifierAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
+        contract.handleRevert = true
+        contract.methods
+            .stake(verifierAddress)
+            .send({ 
+                from: account, 
+                // Minimum 1000CET (1 CET = 1000?)
+                value: "0x3635c9adc5dea00000" 
+            });
+        contract.handleRevert = false
+    }
+
 }
+
+
 
 
 
