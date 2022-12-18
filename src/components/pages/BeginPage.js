@@ -69,3 +69,4 @@ export class BeginPage extends Component {
 		this.state.text = this.state.text === "Owl" ? "World" : "Owl";
 	}
 }
+ 
