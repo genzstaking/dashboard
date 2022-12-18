@@ -21,11 +21,7 @@ export class Sidebar extends Component {
 		class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
 		<SidebarBrand />
 		<SidebarDivider />
-		<SidebarLink
-			href="'#/accounts'">
-			<i class="fas fa-fw fa-tachometer-alt"></i>
-			<span>accounts</span>
-		</SidebarLink>
+
 		<SidebarLink
 			href="'#/csc/staking'">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
@@ -33,64 +29,7 @@ export class Sidebar extends Component {
 		</SidebarLink>
 		
 		
-		<SidebarDivider />
-		<SidebarHeading>Interface</SidebarHeading>
-		<SidebarCollapse>
-			<t t-set-slot="title">
-				<i class="fas fa-fw fa-cog"></i>
-				<span>Components</span>
-			</t>
-			<t t-set-slot="content">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Custom Components:</h6>
-					<a class="collapse-item" href="#/buttons">Buttons</a>
-					<a class="collapse-item" href="	s">Cards</a>
-				</div>
-			</t>
-		</SidebarCollapse>
-		<SidebarCollapse>
-			<t t-set-slot="title">
-				<i class="fas fa-fw fa-wrench"></i>
-				<span>Utilities</span>
-			</t>
-			<t t-set-slot="content">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Custom Utilities:</h6>
-					<a class="collapse-item" href="#/utilities-color">Colors</a>
-					<a class="collapse-item" href="#/utilities-border">Borders</a>
-					<a class="collapse-item" href="#/utilities-animation">Animations</a>
-					<a class="collapse-item" href="#/utilities-other">Other</a>
-				</div>
-			</t>
-		</SidebarCollapse>
-
-		<SidebarDivider />
-		<SidebarHeading>Addons</SidebarHeading>
-		<SidebarCollapse>
-			<t t-set-slot="title">
-				<i class="fas fa-fw fa-folder"></i>
-				<span>Dialogs</span>
-			</t>
-			<t t-set-slot="content">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Login Screens:</h6>
-					<a class="collapse-item" href="login.html">Login</a>
-					<a class="collapse-item" href="register.html">Register</a>
-					<a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-					<div class="collapse-divider"></div>
-					<h6 class="collapse-header">Other Pages:</h6>
-					<a class="collapse-item" href="404.html">404 Page</a>
-					<a class="collapse-item" href="blank.html">Blank Page</a>
-				</div>
-			</t>
-		</SidebarCollapse>
 		
-
-		<SidebarDivider />
-		<!-- Sidebar Toggler (Sidebar) -->
-		<div class="text-center d-none d-md-inline">
-			<button class="rounded-circle border-0" id="sidebarToggle"></button>
-		</div>
 
 		<SidebarMessage>
 			<img 

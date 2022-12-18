@@ -1,6 +1,7 @@
 import { Component, xml, useState } from "@odoo/owl";
 import metamaskIcon from "./img/MetaMaskIcon.svg";
-import coinbase from "./img/Coinbase.svg"
+import coinbase from "./img/Coinbase.svg";
+import logo from "./img/logo.svg";
 import Web3 from "web3";
 
 export class Topbar extends Component {
@@ -9,19 +10,13 @@ export class Topbar extends Component {
     <nav class="navbar justify-content-between navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
         <!--  -->
-        <img alt="logo"/>
+        <img src="${logo}" alt="logo" style="width:32px" class="ms-3"/>
         <button class="btn btn-info text-white rounded-pill " t-if="state.metaMaskIsInstalled | state.coinBaseIsInstalled"  data-bs-toggle="modal" data-bs-target="#TopBarModal">
             unlock wallet
         </button>
         <button class="btn btn-warning text-white rounded-pill " t-if="!(state.metaMaskIsInstalled | state.coinBaseIsInstalled)" data-bs-toggle="modal" data-bs-target="#TopBarModal">
             install wallet
         </button>
-        
-       
-        <!-- Topbar Search -->
-        
-
-        <!-- Topbar Navbar -->
         
     </nav>
     <!-- The Modal -->

@@ -929,49 +929,14 @@ async function mint() {
 
 export class CscStakingPage extends Component {
     static template = xml`
-	<div class="container-fluid">
+	<div class="container-sm">
 		<div class="row d-flex flex-column justify-content-center align-items-center">
 			<img class="figure-img img-fluid" 
-				style="width:256px;"
+				style="width:128px;"
 				src="${img06}" />
-			<h1 class="text-center p-5">Liquid CET Staking</h1>
-			<div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
-				<div class="text-center p-5">
-					<div>
-						<div>TVL</div> 
-						<div>
-							<span>18,252,124.9590 CET</span>
-						</div>
-						<div>
-							<span>$ 877,259.0002</span>
-						</div>
-					</div> 
-				</div>
-				<div class="text-center p-5">
-					<div>APR</div> 
-					<div>7.73%</div>
-				</div>
-				<div class="text-center p-5">
-					<div>Total Return</div> 
-					<div>
-						<span>2,133,459.8737 CET</span>
-					</div> 
-					<div>
-						<span>$ 102,541.3140</span>
-					</div>
-				</div>
-			</div>
-			<div id="actions"
-				class="d-flex flex-row justify-content-center align-items-center">
-				<button class="btn btn-primary" t-on-click="stakeit">Stake Now</button>
-			</div>
-		</div>
+			
 
-
-
-
-		<div class="row d-flex flex-column p-5">
-			<h2 class="text-center p-5">Why Stake with GenzStaking</h2>
+            <h2 class="text-center ">Why Stake with GenzStaking?</h2>
 			<div class="d-flex flex-column flex-md-row justify-content-around">
 				<div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
 					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIBAMAAACnw650AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAtUExURUdwTCLNzx/LzCHMzB/MzBnN0iLLzSPMzSPMzSLNzSPMzSPMzSPMzSLMzSTMzWap9k4AAAAOdFJOUwAuGDokDESBv0/w1Jhox73QbAAAArlJREFUSMftlctrE0EYwNdH7cMHrim+QCnLCqL0EAbWVO0hIQdbqgSpKHppWVlJaUpVsAohYO2hQgiRamw85FBQyMGhFhQhsAhqetHQUhEqJSBKHrvb729wdnYTyWyaVihe9Mfu7MD349vZmW9mOe4/f07LzAakPeW/KrX92IC0Pb5JM9C6Mh8320/LazseDKBNTANBv7WGcwUgkzGNTEYFmKjrbFP1e4nkUxUeJhPJMNbe1ZN6tTuJYDB4A6eVoEIeeofT2aq+VCjf9KD5GIY5p7RL+2pJIZy15dpULZnP3IWiYpNLK+FMlsiztasBEM+9kSSJKMvKkBECeCFJ+WLtaqxMduD3siwjdFZHHr1rcn5Kloc1x9BhCSEkoYiBuoH0iI8wOwutZgShbvwAIZiifRRh63QHkbpuoyGdpKBJCadXHZnc7jMGUtNuN5FcFE+JXRQYdJ+CaVh0ufYD76Yc0diB40WeV3GR5/kDGk9xHQL282L3ef4ZkIY/WKIKuWGAkUYKJIduhkdWeRvMSm1E8A62k5D6yhRIz6sOOObgppfSB4/87RYxVuIiZT8lX/S3Wz2/uuA4B0p2ZMJfITbq2HPw2Az0wPWqlJt1lF3sgxnoK/n8ouX4Uj8dUmRcIBw3RFEUKL5z7LpwTTGglPaJAknm8/mEHmC3/U6wGbfyCKIg5p6zU562YvmCUKXXYKS8neFk+bfUCYx01EhSct+PVRD6YS+z8Spj+njRpn/sLltRV7VJCp67ZHMZgD0eU3bwRLkqaVF2hVOvrdC1QlUqOU8V3XqdOtNA2o2tcWtPmmyanRJ3fozyhQs0cQHzrpOpAgnbNNeXOgM1M2fUlSKVUtxiNodXG0sReBsN49nGEq0tPbCOlA2FowvcOtLo2j+OTZSyiiSTS1YbSZXCgwZSqipt1i/0n+IXUAF4UiPZCBkAAAAASUVORK5CYII=" />
@@ -990,8 +955,14 @@ export class CscStakingPage extends Component {
 				</div>
 			</div>
 		</div>
+		<div class="row d-flex flex-column p-5">
+			
+		</div>
 
-
+        <div id="actions"
+        class="d-flex flex-row justify-content-center align-items-center">
+        <button class="btn btn-primary" t-on-click="stakeit">Stake Now</button>
+    </div>
 
 
 		<div>
