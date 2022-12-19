@@ -84,9 +84,13 @@ export class Root extends Component {
 		'/accounts': {
 			component: AccountsPage
 		},
-		'/csc/staking': {
+		// NOTE: we must use network symbol in the path directly, See the main site for symbol list
+		'/staking/CSC': {
 			component: CscStakingPage
-		}
+		},
+		// '/staking/ETH': {
+		// 	component: CscStakingPage
+		// }
 	};
 
 	update() {

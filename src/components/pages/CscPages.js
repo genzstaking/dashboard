@@ -1,6 +1,6 @@
 import { Component, xml, useState, reactive } from "@odoo/owl";
 
-import img06 from "./csc-img/csc.svg";
+import img06 from "../img/csc.svg";
 import Web3 from 'web3'
 
 
