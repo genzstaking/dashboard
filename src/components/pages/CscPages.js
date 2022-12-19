@@ -935,26 +935,39 @@ export class CscStakingPage extends Component {
 				style="width:128px;"
 				src="${img06}" />
                 <div class="row  justify-content-center align-items-center">
-                <h2 class="text-center">Stake CET</h2> 
-                <div class="card mb-3" style="width: 700px;">
-                    <div class="card-body ">
-                        <div class="p-5">
-                            <div class="input-group justify-content-center align-items-center">
-                                <input id="myInp" placeholder="Enter Cet Amount" value="" type="number" class="form-control"
-                                 aria-label="Example text with two button addons" />
-                                <button class="btn btn-outline-secondary text-center" type="button">
-                                    <img src="${img06}" style="width: 16px" />
-                                </button>
+                    <h2 class="text-center">Stake CET</h2> 
+                    <div class="card mb-3" style="width: 700px;">
+                        <div class="card-body ">
+                            <div class="p-5">
+                                <div class="input-group justify-content-center align-items-center">
+                                    <input id="myInp" placeholder="Enter Cet Amount" value="" type="number" class="form-control"
+                                    aria-label="Example text with two button addons" />
+                                    <button class="btn btn-outline-secondary text-center" type="button">
+                                        <img src="${img06}" style="width: 16px" />
+                                    </button>
+                                </div>
+                            </div> 
+                            <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
+                                <button class="btn btn-success text-white m-2" t-on-click="stakeit">Stake</button>
                             </div>
-                        </div> 
-                        <div id="actions"
-        class="d-flex flex-row justify-content-center align-items-center">
-        <button class="btn btn-success text-white m-2" t-on-click="stakeit">Stake</button>
-        <button class="btn btn-outline-success " t-on-click="unstakeit">UnStake</button>
-    </div>
+                        </div>
+                        <br/>
+                        <button class="btn btn-outline-success mb-2" t-on-click="unstakeit">UnStake</button>
                     </div>
                 </div>
-            </div>
+                <div class="row  justify-content-center align-items-center">
+                    <h2 class="text-center">Stake CET</h2> 
+                    <div class="card mb-3" style="width: 700px;">
+                        <div class="card-body ">
+                            
+                            <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
+                                <button class="btn btn-outline-success" t-on-click="unstakeit">UnStake</button>
+                            </div>
+                        </div>
+                        <br/>
+                        
+                    </div>
+                </div>
 
             <h2 class="text-center ">Why Stake with GenzStaking?</h2>
 			<div class="d-flex flex-column flex-md-row justify-content-around">
@@ -1025,16 +1038,19 @@ export class CscStakingPage extends Component {
         await connectwallet();
         console.log("contract", contract)
         var verifierAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
+        const a = BigInt(1000000000000000000)
+        var amount =BigInt (document.getElementById("myInp").value) * a
+        console.log("amount", amount)
         contract.handleRevert = true
         contract.methods
             .stake(verifierAddress)
             .send({ 
                 from: account, 
                 // Minimum 1000CET (1 CET = 1000?)
-                value: "0x3635c9adc5dea00000" 
+                value:"0x" +  amount.toString(16)
             });
         contract.handleRevert = false
-        console.log(document.getElementById("myInp").value.type)
+        console.log(document.getElementById("myInp").value)
     }
     async  unstakeit() {
         await connectwallet();
