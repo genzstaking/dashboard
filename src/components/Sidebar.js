@@ -5,7 +5,7 @@ import { SidebarLink } from "./widgets/SidebarLink";
 import { SidebarMessage } from "./widgets/SidebarMessage";
 import { SidebarHeading } from "./widgets/SidebarHeading";
 import { SidebarCollapse } from "./widgets/SidebarCollapse";
-
+import rocket from "./img/undraw_rocket.svg"
 export class Sidebar extends Component {
 	static components = {
 		SidebarBrand,
@@ -34,7 +34,7 @@ export class Sidebar extends Component {
 		<SidebarMessage>
 			<img 
 				class="sidebar-card-illustration mb-2" 
-				src="img/undraw_rocket.svg" 
+				src="${rocket}" 
 				alt="Stack with GenZ Staking" />
 			<p class="text-center mb-2"><strong>GenZ Staking</strong> group supports with premium features, partnership program, and more!</p>
 			<a 

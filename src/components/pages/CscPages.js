@@ -1,930 +1,14 @@
-import { Component, xml, useState, reactive } from "@odoo/owl";
+import { Component, xml, useState, reactive, useRef,} from "@odoo/owl";
 
 import img06 from "../img/csc.svg";
-import Web3 from 'web3'
+import {useContract, useAccount} from "../../services/wallet.js"
+import cetABI from "../../contractData/CSCValidators.json"
 
 
 
-var account = null
-var contract = null
-const cetABI = [
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "AddToValidatorCandidate",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "valdiator",
-                "type": "address"
-            }
-        ],
-        "name": "RemoveFromValidatorCandidate",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address[]",
-                "name": "validators",
-                "type": "address[]"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256[]",
-                "name": "rewards",
-                "type": "uint256[]"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "rewardCount",
-                "type": "uint256"
-            }
-        ],
-        "name": "RewardDistributed",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "Staking",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "unLockHeight",
-                "type": "uint256"
-            }
-        ],
-        "name": "Unstake",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "rewardAddr",
-                "type": "address"
-            }
-        ],
-        "name": "ValidatorCreated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address[]",
-                "name": "validators",
-                "type": "address[]"
-            }
-        ],
-        "name": "ValidatorSetUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "ValidatorSlash",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "ValidatorUnjailed",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "rewardAddr",
-                "type": "address"
-            }
-        ],
-        "name": "ValidatorUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "rewardAddress",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "nextWithdrawBlock",
-                "type": "uint256"
-            }
-        ],
-        "name": "WithdrawRewards",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "WithdrawStaking",
-        "type": "event"
-    },
-    {
-        "inputs": [],
-        "name": "BlockEpoch",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MaxValidatorNum",
-        "outputs": [
-            {
-                "internalType": "uint16",
-                "name": "",
-                "type": "uint16"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MinimalOfStaking",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MinimalStakingCoin",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "SlashContractAddr",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "StakingLockPeriod",
-        "outputs": [
-            {
-                "internalType": "uint64",
-                "name": "",
-                "type": "uint64"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ValidatorContractAddr",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ValidatorSlashAmount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "WithdrawRewardPeriod",
-        "outputs": [
-            {
-                "internalType": "uint64",
-                "name": "",
-                "type": "uint64"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address payable",
-                "name": "rewardAddr",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "moniker",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "website",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "details",
-                "type": "string"
-            }
-        ],
-        "name": "create",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "distributeBlockReward",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address payable",
-                "name": "rewardAddr",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "moniker",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "website",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "details",
-                "type": "string"
-            }
-        ],
-        "name": "edit",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getActivatedValidators",
-        "outputs": [
-            {
-                "internalType": "address[]",
-                "name": "",
-                "type": "address[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "getStakingInfo",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getValidatorCandidate",
-        "outputs": [
-            {
-                "internalType": "address[]",
-                "name": "",
-                "type": "address[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "getValidatorDescription",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "getValidatorInfo",
-        "outputs": [
-            {
-                "internalType": "address payable",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "enum Validators.Status",
-                "name": "",
-                "type": "uint8"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address[]",
-                "name": "",
-                "type": "address[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address[]",
-                "name": "validators",
-                "type": "address[]"
-            }
-        ],
-        "name": "initialize",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "initialized",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "isJailed",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "isValidatorActivated",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "who",
-                "type": "address"
-            }
-        ],
-        "name": "isValidatorCandidate",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "slashValidator",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "stake",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "totalStaking",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "unjailed",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "unstake",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "updateActivatedValidators",
-        "outputs": [
-            {
-                "internalType": "address[]",
-                "name": "",
-                "type": "address[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "moniker",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "website",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "details",
-                "type": "string"
-            }
-        ],
-        "name": "validateDescription",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "pure",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "validatorCandidateSet",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "validatorSet",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "withdrawRewards",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "validator",
-                "type": "address"
-            }
-        ],
-        "name": "withdrawStaking",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-]
 const cetContract = "0x0000000000000000000000000000000000001000"
 
-async function connectwallet() {
-    var provider = window.ethereum;
-    var web3 = new Web3(provider);
-    await provider.send('eth_requestAccounts');
-    var accounts = await web3.eth.getAccounts();
-    account = accounts[0];
 
-    //check if network is right
-    let chainId = await window.ethereum.request({ method: "eth_chainId" })
-    const CSCtest = '0x34'
-    if (chainId !== CSCtest) {
-        try {
-            await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: CSCtest }],
-            })
-        } catch (err) {
-            console.log(err)
-            err.value = 'You are not connected to the csc Test Network!'
-        }
-    }
-    contract = await new web3.eth.Contract(cetABI, "0x0000000000000000000000000000000000001000");
-}
-
-async function mint() {
-    var _mintAmount = Number(5);
-    var mintRate = Number(await contract.methods.cost().call());
-    var totalAmount = mintRate * _mintAmount;
-    contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount) });
-}
 
 
 export class CscStakingPage extends Component {
@@ -948,7 +32,13 @@ export class CscStakingPage extends Component {
                                 </div>
                             </div> 
                             <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
-                                <button class="btn btn-success text-white m-2" t-on-click="stakeit">Stake</button>
+                                <button class="btn btn-success text-white m-2" t-on-click="stakeit" id="stakeBtn">
+                                Stake
+                                </button>
+                                <button id="stakeSpin" class="btn btn-success text-white" type="button" disabled="true" style="display: none;">
+                                    <span class="spinner-border spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
                             </div>
                         </div>
                         <br/>
@@ -957,7 +47,12 @@ export class CscStakingPage extends Component {
                             <div class="card mb-3 " style="width: 700px; border: none;">
                                 <div class="card-body ">
                                     <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
-                                        <button class="btn btn-outline-success" t-on-click="unstakeit">UnStake</button>
+                                        <button  class="btn btn-outline-success" t-on-click="unstakeit" id="unstakeBtn">UnStake</button>
+                                        <button id="unstakeSpin" class="btn btn-outline-success " type="button" disabled="true" style="display: none;">
+                                            <span class="spinner-border spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </button>
+
                                     </div>
                                 </div>
                                 <br/>
@@ -968,7 +63,7 @@ export class CscStakingPage extends Component {
 
 
             <h2 class="text-center ">Why Stake with GenzStaking?</h2>
-			<div class="d-flex flex-column flex-md-row justify-content-around">
+			<div class="d-flex flex-column flex-md-row justify-content-center">
 				<div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
 					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIBAMAAACnw650AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAtUExURUdwTCLNzx/LzCHMzB/MzBnN0iLLzSPMzSPMzSLNzSPMzSPMzSPMzSLMzSTMzWap9k4AAAAOdFJOUwAuGDokDESBv0/w1Jhox73QbAAAArlJREFUSMftlctrE0EYwNdH7cMHrim+QCnLCqL0EAbWVO0hIQdbqgSpKHppWVlJaUpVsAohYO2hQgiRamw85FBQyMGhFhQhsAhqetHQUhEqJSBKHrvb729wdnYTyWyaVihe9Mfu7MD349vZmW9mOe4/f07LzAakPeW/KrX92IC0Pb5JM9C6Mh8320/LazseDKBNTANBv7WGcwUgkzGNTEYFmKjrbFP1e4nkUxUeJhPJMNbe1ZN6tTuJYDB4A6eVoEIeeofT2aq+VCjf9KD5GIY5p7RL+2pJIZy15dpULZnP3IWiYpNLK+FMlsiztasBEM+9kSSJKMvKkBECeCFJ+WLtaqxMduD3siwjdFZHHr1rcn5Kloc1x9BhCSEkoYiBuoH0iI8wOwutZgShbvwAIZiifRRh63QHkbpuoyGdpKBJCadXHZnc7jMGUtNuN5FcFE+JXRQYdJ+CaVh0ufYD76Yc0diB40WeV3GR5/kDGk9xHQL282L3ef4ZkIY/WKIKuWGAkUYKJIduhkdWeRvMSm1E8A62k5D6yhRIz6sOOObgppfSB4/87RYxVuIiZT8lX/S3Wz2/uuA4B0p2ZMJfITbq2HPw2Az0wPWqlJt1lF3sgxnoK/n8ouX4Uj8dUmRcIBw3RFEUKL5z7LpwTTGglPaJAknm8/mEHmC3/U6wGbfyCKIg5p6zU562YvmCUKXXYKS8neFk+bfUCYx01EhSct+PVRD6YS+z8Spj+njRpn/sLltRV7VJCp67ZHMZgD0eU3bwRLkqaVF2hVOvrdC1QlUqOU8V3XqdOtNA2o2tcWtPmmyanRJ3fozyhQs0cQHzrpOpAgnbNNeXOgM1M2fUlSKVUtxiNodXG0sReBsN49nGEq0tPbCOlA2FowvcOtLo2j+OTZSyiiSTS1YbSZXCgwZSqipt1i/0n+IXUAF4UiPZCBkAAAAASUVORK5CYII=" />
 					<h3 class="text-center">Staking Easier</h3> 
@@ -996,30 +91,69 @@ export class CscStakingPage extends Component {
 
 	</div>
 	`;
+    async setup(){
+        this.account = await useAccount();
+        this.contract = await useContract("0x34", cetContract, cetABI);
+
+    }
+    
     async stakeit() {
-        await connectwallet();
-        console.log("contract", contract)
+        var btn = document.getElementById("stakeBtn")
+        var spin = document.getElementById("stakeSpin")
+        btn.style.display = "none";
+        btn.disabled  =true;
+        spin.style.display = "block";
+        spin.disabled = true
+        //contract = await useContract(chainId, cetContract, cetABI)
+        //console.log("contract", contract)
         var verifierAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
         const a = BigInt(1000000000000000000)
         var amount =BigInt (document.getElementById("myInp").value) * a
         console.log("amount", amount)
-        contract.handleRevert = true
-        contract.methods
+        this.contract.handleRevert = true
+        
+        try{await this.contract.methods
             .stake(verifierAddress)
             .send({ 
-                from: account, 
+                from: this.account, 
                 // Minimum 1000CET (1 CET = 1000?)
                 value:"0x" +  amount.toString(16)
             });
-        contract.handleRevert = false
-        console.log(document.getElementById("myInp").value)
+        this.contract.handleRevert = false
+        
+        //this.console.log(document.getElementById("myInp").value)
+        btn.style.display = "block";
+        btn.disabled  = false;
+        spin.style.display = "none";
+        } catch{
+            btn.style.display = "block";
+            btn.disabled  = false;
+            spin.style.display = "none";
+        }
+
     }
     async  unstakeit() {
-        await connectwallet();
+        var btn = document.getElementById("unstakeBtn")
+        var spin = document.getElementById("unstakeSpin")
+        btn.style.display = "none";
+        btn.disabled  =true;
+        spin.style.display = "block";
+        spin.disabled = true
+
+        //contract = await useContract(chainId, cetContract, cetABI)
         var verifierAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
-        contract.handleRevert = true
-        contract.methods.unstake(verifierAddress).send({from: account});
-        contract.handleRevert = false
+        this.contract.handleRevert = true
+        try{
+        await this.contract.methods.unstake(verifierAddress).send({from: this.account});
+        this.contract.handleRevert = false
+        btn.style.display = "block";
+        btn.disabled  = false;
+        spin.style.display = "none";
+        } catch{
+            btn.style.display = "block";
+            btn.disabled  = false;
+            spin.style.display = "none";
+        }
     }
 
 }
