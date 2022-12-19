@@ -935,10 +935,10 @@ export class CscStakingPage extends Component {
 				style="width:128px;"
 				src="${img06}" />
                 <div class="row  justify-content-center align-items-center">
-                    <h2 class="text-center">Stake CET</h2> 
-                    <div class="card mb-3" style="width: 700px;">
-                        <div class="card-body ">
-                            <div class="p-5">
+                    <div class="card mb-5" style="width: 800px; border: none;  border-bottom: 6px solid green;">
+                        <div class="card-body " >
+                        <h2 class="text-center">Stake CET</h2> 
+                            <div class="p-2" >
                                 <div class="input-group justify-content-center align-items-center">
                                     <input id="myInp" placeholder="Enter Cet Amount" value="" type="number" class="form-control"
                                     aria-label="Example text with two button addons" />
@@ -952,22 +952,20 @@ export class CscStakingPage extends Component {
                             </div>
                         </div>
                         <br/>
-                        <button class="btn btn-outline-success mb-2" t-on-click="unstakeit">UnStake</button>
-                    </div>
-                </div>
-                <div class="row  justify-content-center align-items-center">
-                    <h2 class="text-center">Stake CET</h2> 
-                    <div class="card mb-3" style="width: 700px;">
-                        <div class="card-body ">
-                            
-                            <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
-                                <button class="btn btn-outline-success" t-on-click="unstakeit">UnStake</button>
+                        <div class="row  justify-content-center align-items-center p-2 ml-5">
+                            <h2 class="text-center">UnStake CET</h2> 
+                            <div class="card mb-3 " style="width: 700px; border: none;">
+                                <div class="card-body ">
+                                    <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
+                                        <button class="btn btn-outline-success" t-on-click="unstakeit">UnStake</button>
+                                    </div>
+                                </div>
+                                <br/>
                             </div>
                         </div>
-                        <br/>
-                        
                     </div>
                 </div>
+
 
             <h2 class="text-center ">Why Stake with GenzStaking?</h2>
 			<div class="d-flex flex-column flex-md-row justify-content-around">
@@ -994,43 +992,7 @@ export class CscStakingPage extends Component {
 
 
 
-		<div>
-			<h2>CSC Reward Calculator</h2> 
-			<div class="card">
-				<div class="card-body d-flex flex-column">
-					<div class="d-flex flex-row justify-content-between">
-						<div>Enter your amount</div> 
-						<div>0 CET</div>
-					</div> 
-					<div>
-						<div class="input-group">
-							<input placeholder="Enter Cet Amount" value="" type="text" class="form-control" aria-label="Example text with two button addons" />
-							<button class="btn btn-outline-secondary" type="button">
-								<img src="${img06}" style="width: 16px" />
-							</button>
-						</div>
-					</div> 
-					<div class="card-body d-flex flex-column flex-md-row justify-content-around p-5">
-						<div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
-							<div>Rewards</div> 
-							<div>7.73%</div> 
-							<div>More info</div>
-						</div> 
-						<div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
-							<div>Monthly earnings</div> 
-							<div>0 CET</div> 
-							<div>$ 0</div>
-						</div> 
-						<div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
-							<div>Yearly eamings</div> 
-							<div>0 CET</div> 
-							<div>$ 0</div>
-						</div>
-					</div> 
-					<button class="btn btn-primary">Stake now</button>
-				</div>
-			</div>
-		</div>
+		
 
 	</div>
 	`;
