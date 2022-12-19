@@ -1,4 +1,4 @@
-import { Component, xml, useState } from "@odoo/owl";
+import { Component, xml, useState, reactive } from "@odoo/owl";
 
 import img06 from "./csc-img/csc.svg";
 import Web3 from 'web3'
@@ -904,7 +904,7 @@ async function connectwallet() {
 
     //check if network is right
     let chainId = await window.ethereum.request({ method: "eth_chainId" })
-    const CSCtest = '0x35'
+    const CSCtest = '0x34'
     if (chainId !== CSCtest) {
         try {
             await window.ethereum.request({
@@ -936,38 +936,22 @@ export class CscStakingPage extends Component {
 				src="${img06}" />
                 <div class="row  justify-content-center align-items-center">
                 <h2 class="text-center">Stake CET</h2> 
-                <div class="card" style="width: 700px;">
-                    <div class="card-body">
-                        <div class="d-flex flex-row justify-content-between">
-                            <div>Enter your amount</div> 
-                            <div>0 CET</div>
-                        </div> 
-                        <div>
+                <div class="card mb-3" style="width: 700px;">
+                    <div class="card-body ">
+                        <div class="p-5">
                             <div class="input-group justify-content-center align-items-center">
-                                <input placeholder="Enter Cet Amount" value="" type="text" class="form-control" aria-label="Example text with two button addons" />
+                                <input id="myInp" placeholder="Enter Cet Amount" value="" type="number" class="form-control"
+                                 aria-label="Example text with two button addons" />
                                 <button class="btn btn-outline-secondary text-center" type="button">
                                     <img src="${img06}" style="width: 16px" />
                                 </button>
                             </div>
                         </div> 
-                        <div class="card-body d-flex flex-column flex-md-row justify-content-around p-5">
-                            <div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
-                                <div>Rewards</div> 
-                                <div>7.73%</div> 
-                                <div>More info</div>
-                            </div> 
-                            <div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
-                                <div>Monthly earnings</div> 
-                                <div>0 CET</div> 
-                                <div>$ 0</div>
-                            </div> 
-                            <div class="d-flex flex-column m-1 p-1 justify-content-center align-items-center">
-                                <div>Yearly eamings</div> 
-                                <div>0 CET</div> 
-                                <div>$ 0</div>
-                            </div>
-                        </div> 
-                        <button class="btn btn-primary">Stake now</button>
+                        <div id="actions"
+        class="d-flex flex-row justify-content-center align-items-center">
+        <button class="btn btn-success text-white m-2" t-on-click="stakeit">Stake</button>
+        <button class="btn btn-outline-success " t-on-click="unstakeit">UnStake</button>
+    </div>
                     </div>
                 </div>
             </div>
@@ -995,10 +979,6 @@ export class CscStakingPage extends Component {
 			
 		</div>
 
-        <div id="actions"
-        class="d-flex flex-row justify-content-center align-items-center">
-        <button class="btn btn-primary" t-on-click="stakeit">Stake Now</button>
-    </div>
 
 
 		<div>
@@ -1053,6 +1033,14 @@ export class CscStakingPage extends Component {
                 // Minimum 1000CET (1 CET = 1000?)
                 value: "0x3635c9adc5dea00000" 
             });
+        contract.handleRevert = false
+        console.log(document.getElementById("myInp").value.type)
+    }
+    async  unstakeit() {
+        await connectwallet();
+        var verifierAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
+        contract.handleRevert = true
+        contract.methods.unstake(verifierAddress).send({from: account});
         contract.handleRevert = false
     }
 
