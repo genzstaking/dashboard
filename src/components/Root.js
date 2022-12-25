@@ -17,7 +17,8 @@ import { UtilitiesColorPage } from "./pages/UtilitiesColorPage";
 import { UtilitiesOtherPage } from "./pages/UtilitiesOtherPage";
 import { AccountsPage } from "./pages/AccountsPage";
 import { CscStakingPage } from "./pages/CscPages";
-
+import {MaticStaking} from "./pages/Matic.js";
+ 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
 	<Sidebar />
@@ -87,6 +88,9 @@ export class Root extends Component {
 		// NOTE: we must use network symbol in the path directly, See the main site for symbol list
 		'/staking/CSC': {
 			component: CscStakingPage
+		},
+		'/staking/MATIC': {
+			component: MaticStaking
 		},
 		// '/staking/ETH': {
 		// 	component: CscStakingPage

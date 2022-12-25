@@ -1,21 +1,21 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet } from "../../services/wallet.js"
 
-import img06 from "../img/csc.svg";
-import cetABI from "../../contractData/CSCValidators.json"
-import { async } from "regenerator-runtime";
+import img06 from "../img/matic.jpg";
+import maticABI from "../../contractData/MATIC.json"
+
 
 
 const genzAdderss = "0xEAfF084e6da9aFE8EcAB4d85de940e7d3153296F";
 const testAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
-const cetContract = "0x0000000000000000000000000000000000001000";
+const maticContract = "0x0000000000000000000000000000000000001010";
 const weiRate = BigInt(1000000000000000000);
-const testnetChainId = "0x35";
-const mainnetChainId = "0x34";
+const testnetChainId = "0x13881";
+const mainnetChainId = "0x89";
 
 
 
-export class CscStakingPage extends Component {
+export class MaticStaking extends Component {
     static template = xml`
 	<div class="container-lg bg-white">
 		<div class="row justify-content-center align-items-center">
@@ -24,11 +24,11 @@ export class CscStakingPage extends Component {
 				src="${img06}" />
                 <div class="row justify-content-center align-items-center">
                     <div class="card mb-5" 
-                        style="width: 800px; border: none;  border-bottom: 6px solid green;">
+                        style="width: 800px; border: none;  border-bottom: 6px solid #8247e5;">
                         <div class="card-body">
                         <h2 class="text-center">
-                            <t t-if="wallet.chainId === '${mainnetChainId}'">Stake CET</t>
-                            <t t-if="wallet.chainId === '${testnetChainId}'">Stake CET TestNet</t>
+                            <t t-if="wallet.chainId === '${mainnetChainId}'">Stake MATIC</t>
+                            <t t-if="wallet.chainId === '${testnetChainId}'">Stake MATIC TestNet</t>
                             <t t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'">Not Connected/Unsupported Network !!</t>
                         </h2> 
                         <div class="p-2" >
@@ -39,6 +39,8 @@ export class CscStakingPage extends Component {
                                     t-model="state.value"
                                     type="number"
                                     aria-label="Example text with two button addons" />
+
+
                                 <button class="btn btn-outline-secondary text-center"
                                     type="button">
                                     <img class=""
@@ -49,17 +51,19 @@ export class CscStakingPage extends Component {
                         </div> 
                         <div class="d-flex flex-row justify-content-center align-items-center"
                             id="actions">
-                            <button class="btn btn-success text-white m-2"
+                            <button class="btn  text-white m-2"
+                                style="background-color:#8247e5"
                                 t-on-click="stakeit"
                                 t-if="wallet.chainId === '${mainnetChainId}' or wallet.chainId === '${testnetChainId}'"
                                 id="stakeBtn">
-                                <span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Stake <t t-esc="state.value" /> CET</span>
-                                <span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Stake <t t-esc="state.value" /> CET Test</span>
+                                <span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Stake <t t-esc="state.value" /> MATIC</span>
+                                <span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Stake <t t-esc="state.value" /> MATIC Test</span>
                                 <span t-if="state.staking"><span class="spinner-border spinner-grow spinner-grow-sm"
                                     role="status" 
                                     aria-hidden="true"></span>Loading...</span>
                             </button>
-                            <button class="btn btn-success text-white m-2"
+                            <button class="btn text-white m-2"
+                                style="background-color:#8247e5"
                                 t-on-click="stakeit"
                                 t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'"
                                 id="switch-to-cet-network">
@@ -70,24 +74,26 @@ export class CscStakingPage extends Component {
                 </div>
                 <div class="row justify-content-center align-items-center p-2 ml-5">
                     <h2 class="text-center">
-                        <t t-if="wallet.chainId === '${mainnetChainId}'">Un-stake CET</t>
-                        <t t-if="wallet.chainId === '${testnetChainId}'">Un-stake CET Test Net</t>
+                        <t t-if="wallet.chainId === '${mainnetChainId}'">Un-stake MATIC</t>
+                        <t t-if="wallet.chainId === '${testnetChainId}'">Un-stake MATIC Test Net</t>
                         <t t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'">Not Connected/Unsupported Network !!</t>
                     </h2> 
                     <div class="card mb-3 " style="width: 700px; border: none;">
                         <div class="card-body ">
                             <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
-                                <button class="btn btn-outline-success" 
+                                <button class="btn" 
+                                style="border-color:#8247e5; color:#8247e5;"
                                     t-on-click="unstakeit" 
                                     t-if="wallet.chainId === '${mainnetChainId}' or wallet.chainId === '${testnetChainId}'"
                                     id="unstakeBtn">
-                                    <span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Un-stake CET</span>
-                                    <span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Un-stake CET Test</span>
+                                    <span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Un-stake MATIC</span>
+                                    <span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Un-stake MATIC Test</span>
                                     <span t-if="state.unstaking"><span class="spinner-border spinner-grow spinner-grow-sm"
                                         role="status" 
                                         aria-hidden="true"></span>Loading...</span>
                                 </button>
-                                <button class="btn btn-success text-white m-2"
+                                <button class="btn  text-white m-2"
+                                style="background-color:#8247e5;"
                                     t-on-click="stakeit"
                                     t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'"
                                     id="switch-to-cet-network">
@@ -146,10 +152,10 @@ export class CscStakingPage extends Component {
             return;
         }
         this.state.staking = true;
-        let contract = useContract(this.wallet.chainId, cetContract, cetABI);
-        var amount = BigInt(this.state.value) * weiRate;
+        let contract = useContract(this.wallet.chainId, maticContract, maticABI);
+        var amount = this.state.value;
         return contract.methods
-            .stake(this.getVerifierAddress())
+            .deposit(this.getVerifierAddress(),"0x" + amount.toString(16))
             .send({
                 from: this.wallet.account,
                 // Minimum 1000CET (1 CET = 1000?)
@@ -170,7 +176,7 @@ export class CscStakingPage extends Component {
             return;
         }
         this.state.unstaking = true;
-        let contract = useContract(this.wallet.chainId, cetContract, cetABI);
+        let contract = useContract(this.wallet.chainId, maticContract, maticABI);
         contract.handleRevert = true
         contract.methods
             .unstake(this.getVerifierAddress())
@@ -185,7 +191,7 @@ export class CscStakingPage extends Component {
             this.withdrawStaking()
     }
     withdrawStaking(){
-        let contract = useContract(this.wallet.chainId, cetContract, cetABI);
+        let contract = useContract(this.wallet.chainId, maticContract, maticABI);
         return contract.methods
             .withdrawStaking(this.getVerifierAddress())
             .send({
