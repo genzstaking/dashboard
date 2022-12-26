@@ -47,6 +47,7 @@ class Wallet {
         return this.provider.request({
             method: 'eth_requestAccounts'
         }).then((accounts) => {
+        
             this.account = (accounts?.length > 0) ? accounts[0] : undefined;
         });
     }
