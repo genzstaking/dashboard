@@ -6,10 +6,10 @@ import maticABI from "../../contractData/MATIC.json"
 
 
 
-const genzAdderss = "0xEAfF084e6da9aFE8EcAB4d85de940e7d3153296F";
+const genzAdderss = "0x5a1b57f87b59e093d332c945c66b602843099f97";
 const testAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
 const maticContract = "0x0000000000000000000000000000000000001010";
-const weiRate = BigInt(1000000000000000000);
+const weiRate = 1000000000000000000;
 const testnetChainId = "0x13881";
 const mainnetChainId = "0x89";
 
@@ -35,9 +35,10 @@ export class MaticStaking extends Component {
                             <div class="input-group justify-content-center align-items-center">
                                 <input class="form-control"
                                     id="myInp" 
-                                    placeholder="Enter Cet Amount" 
+                                    placeholder="Enter MATIC Amount" 
                                     t-model="state.value"
                                     type="number"
+                                    step="0.01"
                                     aria-label="Example text with two button addons" />
 
 
@@ -153,15 +154,16 @@ export class MaticStaking extends Component {
         }
         this.state.staking = true;
         let contract = useContract(this.wallet.chainId, maticContract, maticABI);
-        var amount = this.state.value;
+        var amount = this.state.value*weiRate;
         return contract.methods
             .deposit(this.getVerifierAddress(),"0x" + amount.toString(16))
             .send({
                 from: this.wallet.account,
                 // Minimum 1000CET (1 CET = 1000?)
-                value: "0x" + amount.toString(16)
+                
             }).catch((ex) => {
                 alert("Fail to performe the stake action")
+                console.log(ex)
             }).finally(() => this.state.staking = false);
     }
 
