@@ -30,7 +30,7 @@ export class Topbar extends Component {
                 t-on-click="showAccountInfo"><spam t-esc="wallet.chainId"/></button>
             <button class="btn btn-info text-white rounded-pill mx-2" 
                 t-if="wallet.unlocked"
-                t-on-click="showAccountInfo"><spam t-esc="wallet.account"/></button>
+                t-on-click="showAccountInfo"><spam t-esc="wallet.account.slice(20)+'...'"/></button>
         </div>
     </nav>
     

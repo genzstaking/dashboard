@@ -56,7 +56,7 @@ export class Dashboard extends OPage {
 							</div>
 						</div>
 						<br/>
-						<a href="#/staking/MATIC" class="btn btn" style="color:white;background-color:#8247e5;">Stake MATIC</a>
+						<a href="#/staking/matic" class="btn btn" style="color:white;background-color:#8247e5;">Stake MATIC</a>
 					</div>
 				</div>
 			</div>
