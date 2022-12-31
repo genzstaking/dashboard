@@ -83,7 +83,7 @@ export class Router extends Component {
 	}
 
 	get currentComponent() {
-		return this._currentRoute.component;
+		return this._currentRoute;
 	}
 
 	get routes() {
@@ -139,11 +139,11 @@ export class Router extends Component {
 	}
 
 
-	_hashChanged() {
+	private _hashChanged() {
 		this._tryNav(document.location.hash.substr(1))
 	}
 
-	_triggerPopState(e: any) {
+	private _triggerPopState(e: any) {
 		let path = e?.state?.path;
 		if (!path) {
 			// manual path edit
@@ -152,45 +152,52 @@ export class Router extends Component {
 		this._triggerRouteChange(path, e.target.location.href);
 	}
 
-	_triggerRouteChange(path: string, url: any) {
+	private _triggerRouteChange(path: string, url: any) {
 		this.events.trigger("route", {
-			route: this.routes[path],
+			route: this._findRoute(path),
 			path: path,
 			url: url
 		})
 	}
 
-	_findRoute(url: string) {
-		return this.routes.hasOwnProperty(url) ? url : null;
+	private _findRoute(path: string, defaultRoute: any = null) {
+		// TODO: support path not fount component
+		let route = defaultRoute;
+		this.routes.forEach(page => {
+			if (page.route === path) {
+				route = page;
+			}
+		});
+		return route;
 	}
 
-	_tryNav(href: string) {
+	private _tryNav(href: string) {
 		const url = this._createUrl(href);
 		if (url.protocol.startsWith("http")) {
-			const routePath = this._findRoute(url.pathname);
-			if (routePath && this.routes[routePath]) {
+			const routeComponent = this._findRoute(url.pathname);
+			if (routeComponent) {
 				if (this.routerType === "history") {
-					window.history.pushState({ path: routePath }, routePath, url.origin + url.pathname);
+					window.history.pushState({ path: routeComponent.route }, '', url.origin + url.pathname);
 				}
-				this._triggerRouteChange(routePath, url);
+				this._triggerRouteChange(routeComponent.route, url);
 				return true;
 			}
 		}
 	}
 
-	_createUrl(href: string) {
+	private _createUrl(href: string) {
 		if (this.isHashRouter && href.startsWith("#")) {
 			href = href.substr(1);
 		}
 		return new URL(href, document.location.origin)
 	}
 
-	get _currentRoute() {
+	private get _currentRoute() {
 		// Check if the route type is not hash, then throw error
 		let path = window.location.hash || '#/';
 		path = path.substr(1);
 		// TODO: support path not fount component
-		return this.routes[path];
+		return this._findRoute(path, this.routes[0]);
 	}
 
 }

@@ -1,11 +1,13 @@
-import { Component, xml, useState } from "@odoo/owl";
+import { xml, useState } from "@odoo/owl";
 import { OChart } from "@web/components/chart";
+import {OPage} from "@web/components/page";
 
 
 import csc from "@web/img/csc.svg";
 import matic from "@web/img/matic.jpg";
 
-export class Dashboard extends Component {
+export class Dashboard extends OPage {
+	static route = '/';
 	static components = {
 		OChart,
 	};

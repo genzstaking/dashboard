@@ -1,5 +1,6 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet } from "@web/core/wallet"
+import { useContract, useWallet } from "@web/core/wallet";
+import {OPage} from "@web/components/page";
 
 import img06 from "@web/img/matic.jpg";
 import maticABI from "@web/data/polygon-matic.json"
@@ -14,7 +15,8 @@ const mainnetChainId = "0x89";
 
 
 
-export class MaticStaking extends Component {
+export class MaticStaking extends OPage {
+	static route = '/staking/MATIC';
     static template = xml`
 	<div class="container-lg bg-white">
 		<div class="row justify-content-center align-items-center">

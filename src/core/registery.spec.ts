@@ -1,7 +1,7 @@
 import {describe, expect, test, beforeEach, afterEach} from '@jest/globals';
 import { registry } from "./registry";
 
-import { nextTick, makeTestFixture } from '@web/test-helper';
+import { nextTick, makeTestFixture } from '../test-helper';
 
 //------------------------------------------------------------------------------
 // Setup
