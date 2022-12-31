@@ -3,7 +3,8 @@ import { Collapse } from "bootstrap";
 import { v4 as uuidv4 } from 'uuid';
 
 
-import rocket from "@web/img/undraw_rocket.svg";
+import rocket from "@web/../src/img/logo.svg";
+;
 
 
 export class SidebarBrand extends Component {
@@ -116,7 +117,7 @@ export class Sidebar extends Component {
 		<SidebarMessage>
 			<img 
 				class="sidebar-card-illustration mb-2" 
-				src="${rocket} TODO: replace with image" 
+				src="${rocket} " 
 				alt="Stack with GenZ Staking" />
 			<p class="text-center mb-2"><strong>GenZ Staking</strong> group supports with premium features, partnership program, and more!</p>
 			<a 

@@ -1,5 +1,5 @@
 import { xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet } from "@web/core/wallet"
+import { useContract, useWallet, switchChain } from "@web/core/wallet"
 import { OPage } from "@web/components/page";
 
 import img06 from "@web/img/csc.svg";
@@ -120,9 +120,9 @@ export class CscStakingPage extends OPage {
      * 
      * @returns promise | undefinde
      */
-    stakeit() {
+    async stakeit() {
         if (this.state.staking || !this._checkChainId()) {
-            // wait for last operation
+            await switchChain(mainnetChainId, 'coinex smart chain', 'https://rpc.coinex.net')
             return;
         }
         this.state.staking = true;
