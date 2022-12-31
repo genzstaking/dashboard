@@ -95,7 +95,7 @@ function _connectToMetaMask(wallet: any) {
         wallet.account = (accounts?.length > 0) ? accounts[0] : undefined;
     });
 
-    // TODO: handle chain id change
+    // TODO: handle chain id change from metamask
     wallet.provider.on('chainChanged', (chainId:string) => {
         wallet.chainId = chainId;
     });
@@ -117,6 +117,33 @@ function useContract(id:any, addr:any, abi:any) {
         };
     }
     return new wallet.web3.eth.Contract(abi, addr);
+}
+async function switchChain(chainId, chainName, rpc){
+    try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: chainId }],
+        });
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: chainId,
+                  chainName: chainName,
+                  rpcUrls: [rpc] /* ... */,
+                },
+              ],
+            });
+          } catch (addError) {
+            // handle "add" error
+          }
+        }
+        // handle other "switch" errors
+      }
 }
 
 export {
