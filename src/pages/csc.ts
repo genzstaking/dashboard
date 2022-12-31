@@ -1,3 +1,8 @@
+/*
+CSC Network
+
+
+ */
 import { xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet, switchChain } from "@web/core/wallet"
 import { OPage } from "@web/components/page";
@@ -24,7 +29,7 @@ export class CscStakingPage extends OPage {
 				style="width:128px;"
 				src="${img06}" />
                 <div class="row justify-content-center align-items-center">
-                    <div class="card mb-5" 
+                    <div class="card mb-5" null
                         style="width: 800px; border: none;  border-bottom: 6px solid green;">
                         <div class="card-body">
                         <h2 class="text-center">
