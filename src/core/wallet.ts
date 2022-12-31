@@ -15,6 +15,7 @@ export class Wallet {
                 method: 'eth_chainId'
             }).then((chinId: string) => {
                 this.chainId = chinId
+                
             });
         } else {
             this.chainId = undefined;

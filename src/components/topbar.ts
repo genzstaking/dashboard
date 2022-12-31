@@ -11,7 +11,7 @@ import logo from "@web/img/logo.svg";
 export class Topbar extends Component {
 
     static template = xml`
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow sticky-top">
         <div class="d-flex flex-row w-100">
             <img class="ms-3"
                 src="${logo}" 
