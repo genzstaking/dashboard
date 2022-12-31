@@ -2,7 +2,7 @@ import { Component, xml, useState } from "@odoo/owl";
 
 export class Footer extends Component {
 
-	static template = xml`
+    static template = xml`
     <footer class="sticky-footer bg-white">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
@@ -12,9 +12,13 @@ export class Footer extends Component {
     </footer>
     `;
 
-	state = useState({ text: "Owl" });
+    state: any;
 
-	update() {
-		this.state.text = this.state.text === "Owl" ? "World" : "Owl";
-	}
+    public setup(): void {
+        this.state = useState({ text: "Owl" });
+    }
+
+    public update(): void {
+        this.state.text = this.state.text === "Owl" ? "World" : "Owl";
+    }
 }

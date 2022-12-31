@@ -12,7 +12,7 @@ const ROUTER_TYPES = {
 	history: "history"
 };
 
-function defer(x) {
+function defer(x: Function) {
 	setTimeout(() => x(), 10);
 }
 
@@ -20,36 +20,18 @@ function defer(x) {
 /**
 Makes the path more secure to use.
  */
-function sanitizePath(path) {
+function sanitizePath(path: string) {
 	return path.toString().replace(/\/$/, '').replace(/^\//, '');
 }
 
-// Simple Vanilla JS Event System
-class Emitter {
-	constructor(obj) {
-		this.obj = obj;
-		this.eventTarget = document.createDocumentFragment();
-		["addEventListener", "dispatchEvent", "removeEventListener"]
-			.forEach(this.delegate, this);
-	}
-
-	delegate(method) {
-		this.obj[method] = this.eventTarget[method].bind(this.eventTarget);
-	}
-}
 
 export class Events {
-
-	constructor(host) {
+	host: any;
+	constructor(host: any) {
 		this.host = host;
-		new Emitter(host); // add simple event system
-		host.on = (eventName, func) => {
-			host.addEventListener(eventName, func);
-			return host;
-		}
 	}
 
-	trigger(event, detail, ev) {
+	trigger(event: any, detail: any, ev?: any) {
 		if (typeof (event) === "object" && event instanceof Event) {
 			return this.host.dispatchEvent(event);
 		}
@@ -71,15 +53,32 @@ export class Router extends Component {
 	static defaultProps = {
 		type: ROUTER_TYPES.hash
 	}
-
+	events: Events;
+	routerType: string = ROUTER_TYPES.hash;
 	state = useState({ child: "a" });
 
-	setup() {
+
+	eventTarget = document.createDocumentFragment();
+
+
+	public removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean) {
+		this.eventTarget.removeEventListener(type, callback, options);
+	}
+
+	public dispatchEvent(event: Event): boolean {
+		return this.eventTarget.dispatchEvent(event);
+	}
+
+	public addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void {
+		this.eventTarget.addEventListener(type, callback, options);
+	}
+
+
+	public setup(): void {
 		this.events = new Events(this);
 		// lesten on route change
-		this.listen().on("route", async e => {
-			console.log(e.detail.route, e.detail.url);
-			this.render();
+		this.listen().on("route", (evt: Event) => {
+			return this.render();
 		});
 	}
 
@@ -91,12 +90,13 @@ export class Router extends Component {
 		return this.props.routes;
 	}
 
-	get routerType() {
-		return this.props.type | ROUTER_TYPES.hash;
-	}
-
 	get isHashRouter() {
 		return this.routerType === ROUTER_TYPES.hash;
+	}
+
+	public on(type: string, callback: EventListenerOrEventListenerObject | null): Router {
+		this.addEventListener(type, callback);
+		return this;
 	}
 
 	/**
@@ -108,7 +108,7 @@ export class Router extends Component {
 			throw TypeError("Route not found");
 		}
 		let href = this.isHashRouter ? '#' + path : document.location.origin + path;
-		history.replaceState(null, null, href);
+		history.replaceState(null, '', href);
 		this._tryNav(href);
 	}
 
@@ -116,7 +116,7 @@ export class Router extends Component {
 	 * Start listening for route changes.
 	 * @returns {Router} reference to itself.
 	 */
-	listen() {
+	public listen(): Router {
 		// Check if home page exist
 		if (!this._findRoute('/')) {
 			throw TypeError("No home route found");
@@ -143,7 +143,7 @@ export class Router extends Component {
 		this._tryNav(document.location.hash.substr(1))
 	}
 
-	_triggerPopState(e) {
+	_triggerPopState(e: any) {
 		let path = e?.state?.path;
 		if (!path) {
 			// manual path edit
@@ -152,7 +152,7 @@ export class Router extends Component {
 		this._triggerRouteChange(path, e.target.location.href);
 	}
 
-	_triggerRouteChange(path, url) {
+	_triggerRouteChange(path: string, url: any) {
 		this.events.trigger("route", {
 			route: this.routes[path],
 			path: path,
@@ -160,12 +160,11 @@ export class Router extends Component {
 		})
 	}
 
-	_findRoute(url) {
-		var test = "/" + url.match(/([A-Za-z_0-9.]*)/gm, (match, token) => { return token })[1];
-		return this.routes.hasOwnProperty(test) ? test : null;
+	_findRoute(url: string) {
+		return this.routes.hasOwnProperty(url) ? url : null;
 	}
 
-	_tryNav(href) {
+	_tryNav(href: string) {
 		const url = this._createUrl(href);
 		if (url.protocol.startsWith("http")) {
 			const routePath = this._findRoute(url.pathname);
@@ -179,7 +178,7 @@ export class Router extends Component {
 		}
 	}
 
-	_createUrl(href) {
+	_createUrl(href: string) {
 		if (this.isHashRouter && href.startsWith("#")) {
 			href = href.substr(1);
 		}

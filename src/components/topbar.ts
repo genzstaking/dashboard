@@ -1,12 +1,13 @@
 import { Component, xml, useState, onMounted } from "@odoo/owl";
-import metamaskIcon from "./img/MetaMaskIcon.svg";
-import coinbase from "./img/Coinbase.svg";
-import logo from "./img/logo.svg";
 import Web3 from "web3";
 import { Modal } from "bootstrap";
 
-import { useWallet } from "../services/wallet";
+import { useWallet, Wallet } from "@web/core/wallet";
 
+import metamaskIcon from "@web/img/MetaMaskIcon.svg";
+import coinbase from "@web/img/Coinbase.svg";
+import logo from "@web/img/logo.svg";
+ 
 export class Topbar extends Component {
 
     static template = xml`
@@ -104,6 +105,10 @@ export class Topbar extends Component {
             </div>
         </div>
     </div>`;
+
+    wallet: Wallet;
+    accountInfoModal: Modal;
+    selectProviderModal: Modal;
 
     setup() {
         this.wallet = useWallet();

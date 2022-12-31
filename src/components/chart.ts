@@ -17,19 +17,14 @@ import Chart from 'chart.js/auto';
 export class OChart extends Component {
 
 	static props = ['data'];
-	static template = xml`
-	<canvas t-ref="chartCanvas" />
-	`;
+	static template = xml`<canvas t-ref="chartCanvas" />`;
 
-	canvas = useRef("chartCanvas");
+	canvas?: any;
+	chart?: Chart;
 
-	setup() {
-		onRendered(() => {
-			console.log(this.canvas);
-			//this.chart = new Chart(this.canvas, this.props.data);
-		});
+	public setup(): void {
+		this.canvas = useRef("chartCanvas");
 		onMounted(() => {
-			console.log(this.canvas);
 			this.chart = new Chart(this.canvas.el, this.props.data);
 		});
 	}

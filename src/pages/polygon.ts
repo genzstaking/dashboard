@@ -1,9 +1,8 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet } from "../../services/wallet.js"
+import { useContract, useWallet } from "@web/core/wallet"
 
-import img06 from "../img/matic.jpg";
-import maticABI from "../../contractData/MATIC.json"
-
+import img06 from "@web/img/matic.jpg";
+import maticABI from "@web/data/polygon-matic.json"
 
 
 const genzAdderss = "0x5a1b57f87b59e093d332c945c66b602843099f97";
@@ -132,15 +131,13 @@ export class MaticStaking extends Component {
 		</div>
 	</div>`;
 
+    wallet = useWallet();
+    state = useState({
+        staking: false,
+        unstaking: false,
+        value: 0,
+    });
 
-    setup() {
-        this.wallet = useWallet();
-        this.state = useState({
-            staking: false,
-            unstaking: false,
-            value: 0,
-        });
-    }
 
     /**
      * Stake the amount value from the input
@@ -161,9 +158,9 @@ export class MaticStaking extends Component {
                 from: this.wallet.account,
                 // Minimum 1000CET (1 CET = 1000?)
                 
-            }).catch((ex) => {
-                alert("Fail to performe the stake action")
-                console.log(ex)
+            }).catch(ex => {
+                alert("Fail to performe the stake action");
+                console.error(ex);
             }).finally(() => this.state.staking = false);
     }
 

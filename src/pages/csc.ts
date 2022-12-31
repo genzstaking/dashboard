@@ -1,9 +1,8 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet } from "../../services/wallet.js"
+import { useContract, useWallet } from "@web/core/wallet"
 
-import img06 from "../img/csc.svg";
-import cetABI from "../../contractData/CSCValidators.json"
-import { async } from "regenerator-runtime";
+import img06 from "@web/img/csc.svg";
+import cetABI from "@web/data/csc-validators.json"
 
 
 const genzAdderss = "0xEAfF084e6da9aFE8EcAB4d85de940e7d3153296F";
@@ -125,14 +124,16 @@ export class CscStakingPage extends Component {
 		</div>
 	</div>`;
 
+    wallet = useWallet();
+    state = useState({
+        staking: false,
+        unstaking: false,
+        value: 0,
+    });
 
-    setup() {
-        this.wallet = useWallet();
-        this.state = useState({
-            staking: false,
-            unstaking: false,
-            value: 0,
-        });
+
+    public setup() : void{
+        //
     }
 
     /**
@@ -191,7 +192,7 @@ export class CscStakingPage extends Component {
             .send({
                 from: this.wallet.account
             }).catch(ex => {
-                alert("Fail to unstake!!",ex);
+                alert("Fail to unstake!!");
             });
     }
 

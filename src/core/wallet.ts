@@ -1,53 +1,54 @@
 import { reactive, useState } from "@odoo/owl";
 import Web3 from "web3";
 
-class Wallet {
-    _provider;
-    _account;
-    chainId;
-    web3;
+export class Wallet {
+    _provider: any;
+    _account: any;
+    public chainId: string;
+    web3?: Web3;
 
-    set account(account) {
+    public set account(account) {
         this._account = account;
         // update chain id if account changed
         if (this.isConnected) {
-            ethereum.request({
+            window.ethereum.request({
                 method: 'eth_chainId'
-            }).then(chinId => this.chainId = chinId);
+            }).then((chinId: string) => {
+                this.chainId = chinId
+            });
         } else {
             this.chainId = undefined;
         }
     }
 
-    get account() {
+    public get account() {
         return this._account;
     }
 
-    get isConnected() {
+    public get isConnected() {
         return this._account;
     }
 
-    get unlocked() {
+    public get unlocked() {
         return this.account;
     }
 
-    set provider(provider) {
+    public set provider(provider) {
         this._provider = provider;
         this.web3 = new Web3(this._provider);
     }
 
-    get provider() {
+    public get provider() {
         return this._provider;
     }
 
     /**
      * Connect wallet to the current provider
      */
-    connect() {
+    public connect() {
         return this.provider.request({
             method: 'eth_requestAccounts'
-        }).then((accounts) => {
-        
+        }).then((accounts: any[]) => {
             this.account = (accounts?.length > 0) ? accounts[0] : undefined;
         });
     }
@@ -79,23 +80,23 @@ function useWallet() {
 /*
 Add listener to MetaMask and follows changes.
 */
-function _connectToMetaMask(wallet) {
+function _connectToMetaMask(wallet: any) {
     wallet.isMetaMask = true;
     wallet.provider = window.ethereum;
     // Check current account
     wallet.provider.request({
         method: 'eth_accounts'
-    }).then(accounts => {
+    }).then((accounts: any[]) => {
         wallet.account = (accounts?.length > 0) ? accounts[0] : undefined;
     });
 
     // handle account change
-    wallet.provider.on('accountsChanged', (accounts) => {
+    wallet.provider.on('accountsChanged', (accounts: any[]) => {
         wallet.account = (accounts?.length > 0) ? accounts[0] : undefined;
     });
 
     // TODO: handle chain id change
-    wallet.provider.on('chainChanged', (chainId) => {
+    wallet.provider.on('chainChanged', (chainId:string) => {
         wallet.chainId = chainId;
     });
 }
@@ -104,15 +105,15 @@ function _connectToMetaMask(wallet) {
 /*
 Add listener to CoinbaseWallet and follows changes.
 */
-function _connectToCoinbaseWallet(wallet) {
+function _connectToCoinbaseWallet(wallet:any) {
     wallet.isCoinbaseWallet = true;
     wallet.provider = window.ethereum;
 }
 
-function useContract(id, addr, abi) {
+function useContract(id:any, addr:any, abi:any) {
     if (wallet.chainId !== id) {
         throw {
-            message: `Current chain id (${wallet.chinId}) deffers from requested (${id})`
+            message: `Current chain id (${wallet.chainId}) deffers from requested (${id})`
         };
     }
     return new wallet.web3.eth.Contract(abi, addr);

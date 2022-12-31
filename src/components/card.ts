@@ -1,10 +1,6 @@
 import {
 	Component,
 	xml,
-	useState,
-	onRendered,
-	onMounted,
-	useRef,
 } from "@odoo/owl";
 
 

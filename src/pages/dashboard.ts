@@ -1,11 +1,11 @@
 import { Component, xml, useState } from "@odoo/owl";
-import { OChart } from "../widgets/OChart";
+import { OChart } from "@web/components/chart";
 
-import { CHART_DATA } from "./ChartPage";
 
-import csc from "../img/csc.svg";
-import matic from "../img/matic.jpg";
-export class BeginPage extends Component {
+import csc from "@web/img/csc.svg";
+import matic from "@web/img/matic.jpg";
+
+export class Dashboard extends Component {
 	static components = {
 		OChart,
 	};
@@ -58,29 +58,10 @@ export class BeginPage extends Component {
 					</div>
 				</div>
 			</div>
-
-	
-			
-
 		</div>
-
 		<!-- Content Row -->
-
-		<div class="row">
-
-
-		</div>
-
+		<div class="row"></div>
 	</div>
 	`;
 
-	state = useState({
-		text: "Owl",
-		...CHART_DATA
-	});
-
-	update() {
-		this.state.text = this.state.text === "Owl" ? "World" : "Owl";
-	}
 }
- 

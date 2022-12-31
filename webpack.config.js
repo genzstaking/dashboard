@@ -3,13 +3,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const host = "localhost";
 
-module.exports = function(env, argv) {
+module.exports = function (env, argv) {
 	const mode = argv.mode || "development";
 	return {
 		mode: mode,
-		entry: "./src/main.js",
+		entry: "./src/main.ts",
+		devtool: 'inline-source-map',
 		output: {
-			filename: "main.js",
+			filename: "bundle.js",
 			path: path.resolve(__dirname, "docs"),
 		},
 		module: {
@@ -24,9 +25,15 @@ module.exports = function(env, argv) {
 					},
 				}]
 			}, {
-				test: /\.jsx?$/,
-				loader: "babel-loader",
+				test: /\.tsx?$/,
+				use: 'babel-loader',
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.js$/,
+				use: ["source-map-loader"],
+				exclude: /node_modules/,
+				enforce: "pre"
 			}, {
 				test: /\.css$/,
 				use: [
@@ -52,7 +59,10 @@ module.exports = function(env, argv) {
 			}],
 		},
 		resolve: {
-			extensions: [".js", ".jsx"],
+			extensions: ['.tsx', '.ts', '.js'],
+			alias: {
+				'@web': path.resolve(__dirname, 'src/'),
+			}
 		},
 		devServer: {
 			compress: true,
