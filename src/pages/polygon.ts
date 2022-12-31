@@ -108,6 +108,9 @@ export class MaticStaking extends OPage {
                 </div>
             </div>
 		</div>
+		<div class="row d-flex flex-column p-5">
+			
+		</div>
 	</div>`;
 
     wallet = useWallet();
