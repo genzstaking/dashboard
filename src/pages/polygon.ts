@@ -1,5 +1,5 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet } from "@web/core/wallet"
+import { useContract, useWallet, switchChain } from "@web/core/wallet"
 
 import img06 from "@web/img/matic.jpg";
 import maticABI from "@web/data/polygon-matic.json"
@@ -144,9 +144,9 @@ export class MaticStaking extends Component {
      * 
      * @returns promise | undefinde
      */
-    stakeit() {
+    async stakeit() {
         if (this.state.staking || !this._checkChainId()) {
-            // wait for last operation
+            await switchChain(mainnetChainId, 'Polygon', 'https://mainnet.infura.io/v3/')
             return;
         }
         this.state.staking = true;

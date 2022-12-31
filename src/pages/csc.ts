@@ -1,5 +1,5 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet } from "@web/core/wallet"
+import { useContract, useWallet, switchChain } from "@web/core/wallet"
 
 import img06 from "@web/img/csc.svg";
 import cetABI from "@web/data/csc-validators.json"
@@ -141,9 +141,9 @@ export class CscStakingPage extends Component {
      * 
      * @returns promise | undefinde
      */
-    stakeit() {
+    async stakeit() {
         if (this.state.staking || !this._checkChainId()) {
-            // wait for last operation
+            await switchChain(mainnetChainId, 'coinex smart chain', 'https://rpc.coinex.net')
             return;
         }
         this.state.staking = true;

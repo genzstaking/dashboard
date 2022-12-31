@@ -148,5 +148,6 @@ async function switchChain(chainId, chainName, rpc){
 
 export {
     useContract,
-    useWallet
+    useWallet,
+    switchChain
 }
