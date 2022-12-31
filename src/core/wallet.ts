@@ -4,7 +4,7 @@ import Web3 from "web3";
 export class Wallet {
     _provider: any;
     _account: any;
-    public chainId: string;
+    public chainId: string | undefined;
     web3?: Web3;
 
     public set account(account) {

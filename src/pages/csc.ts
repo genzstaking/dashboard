@@ -1,5 +1,11 @@
-import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
+/*
+CSC Network
+
+
+ */
+import { xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet, switchChain } from "@web/core/wallet"
+import { OPage } from "@web/components/page";
 
 import img06 from "@web/img/csc.svg";
 import cetABI from "@web/data/csc-validators.json"
@@ -14,7 +20,8 @@ const mainnetChainId = "0x34";
 
 
 
-export class CscStakingPage extends Component {
+export class CscStakingPage extends OPage {
+	static route = '/staking/CSC';
     static template = xml`
 	<div class="container-lg bg-white justify-content-center align-items-center">
 		<div class="row justify-content-center align-items-center">

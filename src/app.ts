@@ -1,12 +1,12 @@
 import { Component, useState, xml } from "@odoo/owl";
 import { Footer } from "@web/components/footer";
-import {Sidebar} from "@web/components/sidebar";
+import { Sidebar } from "@web/components/sidebar";
 import { Topbar } from "@web/components/topbar";
 import { Router } from "@web/core/router";
 
 import { Dashboard } from "@web/pages/dashboard";
 import { CscStakingPage } from "@web/pages/csc";
-import {MaticStaking} from "@web/pages/polygon";
+import { MaticStaking } from "@web/pages/polygon";
 
 const ROOT_TEMPLATE = xml`
 <div id="wrapper">
@@ -51,20 +51,10 @@ export class Root extends Component {
 	routes: any;
 
 	public setup(): void {
-		this.routeType  = 'hash';
+		this.routeType = 'hash';
 		this.state = useState(new RootState());
-		this.routes= {
-			'/': {
-				component: Dashboard
-			},
-			// NOTE: we must use network symbol in the path directly, See the main site 
-			// for symbol list
-			'/staking/CSC': {
-				component: CscStakingPage
-			},
-			'/staking/MATIC': {
-				component: MaticStaking
-			},
-		};
+		this.routes = [
+			Dashboard, CscStakingPage, MaticStaking
+		];
 	}
 }
