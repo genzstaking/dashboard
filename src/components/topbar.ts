@@ -1,11 +1,10 @@
-import { Component, xml, useState, onMounted } from "@odoo/owl";
-import Web3 from "web3";
+import { Component, onMounted, xml } from "@odoo/owl";
 import { Modal } from "bootstrap";
 
-import { useWallet, Wallet } from "@web/core/wallet";
+import { Wallet, useWallet } from "@web/core/wallet";
 
-import metamaskIcon from "@web/img/MetaMaskIcon.svg";
 import coinbase from "@web/img/Coinbase.svg";
+import metamaskIcon from "@web/img/MetaMaskIcon.svg";
 import logo from "@web/img/logo.svg";
  
 export class Topbar extends Component {

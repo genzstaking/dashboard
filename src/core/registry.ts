@@ -2,6 +2,7 @@
 /*
 This is part of odoo web addon. 
 see: https://github.com/odoo/odoo/tree/master/addons/web/static/src/core
+see: https://www.odoo.com/documentation/16.0/developer/reference/frontend/registries.html
 */
 import { EventBus } from "@odoo/owl";
 
@@ -28,8 +29,8 @@ export class Registry extends EventBus {
 
     subRegistries: Map<string, Registry>;
     content: Map<string, any>;
-    elements: any[];
-    entries: any[];
+    elements: any[] | null;
+    entries: any[] | null;
 
     constructor() {
         super();
@@ -57,7 +58,7 @@ export class Registry extends EventBus {
      * @returns {Registry}
      */
     public add(key: string, value: any, force: boolean = false, sequence: number = -1): Registry {
-        if (!force && (key in this.content)) {
+        if (!force && this.content.has(key)) {
             throw new DuplicatedKeyError(`Cannot add '${key}' in this registry: it already exists`);
         }
         let previousSequence;
@@ -79,7 +80,7 @@ export class Registry extends EventBus {
      * @returns {any}
      */
     public get(key: string, defaultValue: any = undefined): any {
-        if (defaultValue === undefined && !(key in this.content)) {
+        if (defaultValue === undefined && !this.content.has(key)) {
             throw new KeyNotFoundError(`Cannot find ${key} in this registry!`);
         }
         const info = this.content.get(key);
@@ -93,7 +94,7 @@ export class Registry extends EventBus {
      * @returns {boolean}
      */
     public contains(key: string): boolean {
-        return key in this.content;
+        return this.content.has(key);
     }
 
     /**
@@ -141,10 +142,12 @@ export class Registry extends EventBus {
      * @returns {Registry}
      */
     public category(subcategory: string): Registry {
-        if (!(subcategory in this.subRegistries)) {
+        let category = this.subRegistries.get(subcategory);
+        if (!category) {
+            category = new Registry();
             this.subRegistries.set(subcategory, new Registry());
         }
-        return this.subRegistries.get(subcategory);
+        return category;
     }
 }
 

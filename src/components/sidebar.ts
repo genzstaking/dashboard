@@ -1,10 +1,8 @@
-import { Component, xml, useState } from "@odoo/owl";
-import { Collapse } from "bootstrap";
+import { Component, xml } from "@odoo/owl";
 import { v4 as uuidv4 } from 'uuid';
 
 
-import rocket from "@web/../src/img/logo.svg";
-;
+import rocket from "@web/img/logo.svg";
 
 
 export class SidebarBrand extends Component {
@@ -117,7 +115,7 @@ export class Sidebar extends Component {
 		<SidebarMessage>
 			<img 
 				class="sidebar-card-illustration mb-2" 
-				src="${rocket} " 
+				src="${rocket}" 
 				alt="Stack with GenZ Staking" />
 			<p class="text-center mb-2"><strong>GenZ Staking</strong> group supports with premium features, partnership program, and more!</p>
 			<a 
