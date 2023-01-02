@@ -1,12 +1,19 @@
 /** @odoo-module **/
 
+import { App, whenReady } from "@odoo/owl";
+
 import { makeEnv, startServices } from "./env";
-// import { localization } from "@web/core/l10n/localization";
+import { localization } from "./core/l10n/localization";
 // import { renderToString } from "./core/utils/render";
-// import { setLoadXmlDefaultApp, templates } from "@web/core/assets";
+import { setLoadXmlDefaultApp, templates } from "./core/assets";
 // import { hasTouch } from "@web/core/browser/feature_detection";
 
-import { App, whenReady } from "@odoo/owl";
+
+// Import services
+import "./webclient/menus/menu_service";
+import "./webclient/actions/action_service";
+
+// Import components
 
 /**
  * Function to start a webclient.
@@ -35,21 +42,21 @@ export async function startWebClient(Webclient) : Promise<App>{
     // mapLegacyEnvToWowlEnv(legacyEnv, env);
     const app = new App(Webclient, {
         env,
-        // templates,
+        templates,
         dev: env.debug,
         translatableAttributes: ["data-tooltip"],
         translateFn: env._t,
     });
     // renderToString.app = app;
-    // setLoadXmlDefaultApp(app);
+    setLoadXmlDefaultApp(app);
     const root = await app.mount(document.body);
     const classList = document.body.classList;
-    // if (localization.direction === "rtl") {
-    //     classList.add("o_rtl");
-    // }
-    if (env.services.user.userId === 1) {
-        classList.add("o_is_superuser");
+    if (localization.direction === "rtl") {
+        classList.add("o_rtl");
     }
+    // if (env.services.user.userId === 1) {
+    //     classList.add("o_is_superuser");
+    // }
     if (env.debug) {
         classList.add("o_debug");
     }

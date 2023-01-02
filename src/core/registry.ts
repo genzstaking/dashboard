@@ -57,7 +57,8 @@ export class Registry extends EventBus {
      * @param {{force?: boolean, sequence?: number}} [options]
      * @returns {Registry}
      */
-    public add(key: string, value: any, force: boolean = false, sequence: number = -1): Registry {
+    public add(key: string, value: any,
+        { force, sequence }: { force?: boolean, sequence?: number } = { force: false, sequence: undefined }): Registry {
         if (!force && this.content.has(key)) {
             throw new DuplicatedKeyError(`Cannot add '${key}' in this registry: it already exists`);
         }
@@ -66,7 +67,7 @@ export class Registry extends EventBus {
             const elem = this.content.get(key)
             previousSequence = elem && elem[0];
         }
-        sequence = sequence === -1 ? previousSequence || 50 : sequence;
+        sequence = sequence ? previousSequence || 50 : sequence;
         this.content.set(key, [sequence, value]);
 
         this.trigger("UPDATE", { operation: "add", key, value });

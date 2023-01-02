@@ -1,24 +1,44 @@
 /** @odoo-module **/
-
-import { useOwnDebugContext } from "@web/core/debug/debug_context";
-import { DebugMenu } from "@web/core/debug/debug_menu";
-import { localization } from "@web/core/l10n/localization";
-import { MainComponentsContainer } from "@web/core/main_components_container";
-import { registry } from "@web/core/registry";
-import { useBus, useService } from "@web/core/utils/hooks";
-import { ActionContainer } from "./actions/action_container";
-import { NavBar } from "./navbar/navbar";
-
 import { Component, onMounted, useExternalListener, useState } from "@odoo/owl";
 
+import { useOwnDebugContext } from "../core/debug/debug_context";
+import { DebugMenu } from "../core/debug/debug_menu";
+import { localization } from "../core/l10n/localization";
+import { MainComponentsContainer } from "../core/main_components_container";
+import { registry } from "../core/registry";
+import { useBus, useService } from "../core/utils/hooks";
+import { ActionContainer } from "./actions/action_container";
+// import { NavBar } from "./navbar/navbar";
+
+
+
 export class WebClient extends Component {
+
+    static components = {
+        ActionContainer,
+        // NavBar,
+        MainComponentsContainer,
+    };
+    static template = "web.WebClient";
+
+    localization: any;
+    state = useState({
+        fullscreen: false,
+    });
+    menuService: any;
+    actionService: any;
+    title: any;
+    router: any;
+    user: any;
+
+
     setup() {
         this.menuService = useService("menu");
         this.actionService = useService("action");
         this.title = useService("title");
         this.router = useService("router");
         this.user = useService("user");
-        useService("legacy_service_provider");
+        // useService("legacy_service_provider");
         useOwnDebugContext({ categories: ["default"] });
         if (this.env.debug) {
             registry.category("systray").add(
@@ -30,9 +50,7 @@ export class WebClient extends Component {
             );
         }
         this.localization = localization;
-        this.state = useState({
-            fullscreen: false,
-        });
+
         this.title.setParts({ zopenerp: "Odoo" }); // zopenerp is easy to grep
         useBus(this.env.bus, "ROUTE_CHANGE", this.loadRouterState);
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", ({ detail: mode }) => {
@@ -108,9 +126,3 @@ export class WebClient extends Component {
         }
     }
 }
-WebClient.components = {
-    ActionContainer,
-    NavBar,
-    MainComponentsContainer,
-};
-WebClient.template = "web.WebClient";

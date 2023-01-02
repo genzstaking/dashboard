@@ -84,7 +84,7 @@ export async function startServices(env) {
     await _startServices(env, toStart);
 }
 
-async function _startServices(env, toStart) {
+async function _startServices(env: any, toStart: any) {
     if (startServicesPromise) {
         return startServicesPromise.then(() => _startServices(env, toStart));
     }
