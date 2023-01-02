@@ -53,6 +53,13 @@ export class Wallet {
             this.account = (accounts?.length > 0) ? accounts[0] : undefined;
         });
     }
+
+    /***
+     * disconnect wallet from current providet
+     */
+    public async disconnect(){
+        await this.provider.disconnect();
+    }
 }
 
 /**
@@ -99,6 +106,10 @@ function _connectToMetaMask(wallet: any) {
     // TODO: handle chain id change from metamask
     wallet.provider.on('chainChanged', (chainId:string) => {
         wallet.chainId = chainId;
+    });
+
+    wallet.provider.on('disconnect', (error) => {
+
     });
 }
 
