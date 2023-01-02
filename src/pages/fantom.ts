@@ -182,17 +182,17 @@ export class FantomStaking extends OPage {
      */
     async stakeit() {
         if (this.state.staking || !this._checkChainId()) {
-            await switchChain(mainnetChainId, 'Polygon', 'https://mainnet.infura.io/v3/')
+            await switchChain(mainnetChainId, 'Fantom Opera', 'https://rpc.ankr.com/fantom/')
             return;
         }
         this.state.staking = true;
         let contract = useContract(this.wallet.chainId, FantomContract, FantomABI);
         var amount = this.state.value*weiRate;
+        var val = "0x" + amount.toString(16)
         return contract.methods
-            .deposit(this.getVerifierAddress(),"0x" + amount.toString(16))
+            .delegate( this.getVerifierAddress())
             .send({
-                from: this.wallet.account,
-                // Minimum 1000m (1 m = 1000?)
+                from: this.wallet.account,val
                 
             }).catch(ex => {
                 alert("Fail to performe the stake action");
