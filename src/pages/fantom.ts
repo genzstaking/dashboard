@@ -35,7 +35,7 @@ const testAddress = "0xaa3a160e91f63f1db959640e0a7b8911b6bd5b95";
 const FantomContract = "0xFC00FACE00000000000000000000000000000000";
 const weiRate = 1000000000000000000;
 const testnetChainId = "0xfa2";
-const mainnetChainId = "0xFA";
+const mainnetChainId = "0xfa";
 
 
 
@@ -101,7 +101,7 @@ export class FantomStaking extends OPage {
                                 </div>
                             </div> 
                             <div class="d-flex flex-row justify-content-center align-items-center"
-                            style="border-color:#1969ff; color:#1969ff;"                   id="actions">
+                            style="border-color:#1969ff; color:#1969ff;" id="actions">
                                 <button class="btn text-white m-2"
                                 style="background-color:#1969ff"
                                 t-on-click="stakeit"
@@ -182,7 +182,7 @@ export class FantomStaking extends OPage {
      */
     async stakeit() {
         if (this.state.staking || !this._checkChainId()) {
-            await switchChain(mainnetChainId, 'Fantom Opera', 'https://rpc.ankr.com/fantom/')
+            await switchChain(mainnetChainId, 'Fantom Opera', 'https://rpcapi.fantom.network/')
             return;
         }
         this.state.staking = true;
