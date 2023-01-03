@@ -23,7 +23,7 @@ import "./webclient/actions/action_service";
  *
  * @param {Component} Webclient
  */
-export async function startWebClient(Webclient) : Promise<App>{
+export async function startWebClient(Webclient): Promise<App> {
     // odoo.info = {
     //     db: session.db,
     //     server_version: session.server_version,

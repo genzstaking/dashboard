@@ -10,9 +10,21 @@ import { registry } from "./registry";
  * functions. This is done in order to be able to make a test environment.
  * Modules should only use the methods exported below.
  */
-export const assets = {};
+export const assets: {
+    loadJS: Function,
+    loadCSS: Function,
+    loadXML: Function,
+    getBundle: Function,
+    loadBundle: Function,
+} = {
+    loadJS: () => { },
+    loadCSS: () => { },
+    loadXML: () => { },
+    getBundle: () => { },
+    loadBundle: () => { },
+};
 
-class AssetsLoadingError extends Error {}
+class AssetsLoadingError extends Error { }
 
 /**
  * Loads the given url inside a script tag.
@@ -87,7 +99,7 @@ let defaultApp;
 export const _loadXML = (assets.loadXML = function loadXML(xml, app = defaultApp) {
     const doc = new DOMParser().parseFromString(xml, "text/xml");
     if (doc.querySelector("parsererror")) {
-        throw doc.querySelector("parsererror div").textContent.split(":")[0];
+        throw doc.querySelector("parsererror div")?.textContent?.split(":")[0];
     }
 
     for (const element of doc.querySelectorAll("templates > [t-name][owl]")) {
@@ -125,12 +137,17 @@ export function setLoadXmlDefaultApp(app) {
  */
 export const _getBundle = (assets.getBundle = memoize(async function getBundle(bundleName) {
     const url = new URL(`/web/bundle/${bundleName}`, location.origin);
-    for (const [key, value] of Object.entries(session.bundle_params || {})) {
-        url.searchParams.set(key, value);
-    }
+    // for (const [key, value] of Object.entries(session.bundle_params || {})) {
+    //     url.searchParams.set(key, value);
+    // }
     const response = await browser.fetch(url.href);
     const json = await response.json();
-    const assets = {
+    const assets: {
+        cssLibs: any[],
+        cssContents: any[],
+        jsLibs: any[],
+        jsContents: any[],
+    } = {
         cssLibs: [],
         cssContents: [],
         jsLibs: [],
@@ -197,9 +214,9 @@ export const _loadBundle = (assets.loadBundle = async function loadBundle(desc) 
             await assets.loadJS(urlData);
             // Wait template if the JavaScript come from bundle.
             const bundle = urlData.match(/\/web\/assets\/.*\/([^/]+?)(\.min)?\.js/);
-            if (bundle) {
-                await odoo.ready(bundle[1] + ".bundle.xml");
-            }
+            // if (bundle) {
+            //     await odoo.ready(bundle[1] + ".bundle.xml");
+            // }
         } else {
             // parallel loading
             await Promise.all(urlData.map(loadJS));
@@ -248,11 +265,21 @@ export const loadBundle = function (desc) {
     return assets.loadBundle(desc);
 };
 
+window.assets  = assets;
+
 import { Component, xml, onWillStart } from "@odoo/owl";
 /**
  * Utility component that loads an asset bundle before instanciating a component
  */
 export class LazyComponent extends Component {
+    static template = xml`<t t-component="Component" t-props="props.props"/>`;
+    static props = {
+        Component: String,
+        bundle: String,
+        props: { type: Object, optional: true },
+    };
+    Component: any;
+
     setup() {
         onWillStart(async () => {
             const bundle = await getBundle(this.props.bundle);
@@ -261,9 +288,3 @@ export class LazyComponent extends Component {
         });
     }
 }
-LazyComponent.template = xml`<t t-component="Component" t-props="props.props"/>`;
-LazyComponent.props = {
-    Component: String,
-    bundle: String,
-    props: { type: Object, optional: true },
-};

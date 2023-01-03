@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const qwebLoader = require("./webpack/qweb-loader");
 
 const host = "localhost";
 
@@ -15,6 +16,14 @@ module.exports = function (env, argv) {
 		},
 		module: {
 			rules: [{
+				test: /.*\.(xml)$/,
+				exclude: /node_modules/,
+				use: [{
+					loader: 'raw-loader'
+				},{
+					loader: path.resolve(__dirname, 'webpack/qweb-loader.js')
+				}]
+			}, {
 				test: /img\/.*\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
 				exclude: /node_modules/,
 				use: [{

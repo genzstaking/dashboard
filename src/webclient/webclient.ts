@@ -12,6 +12,9 @@ import { ActionContainer } from "./actions/action_container";
 
 
 
+import "./webclient.xml";
+// import "./webclient.scss";
+
 export class WebClient extends Component {
 
     static components = {
