@@ -9,11 +9,6 @@ import { setLoadXmlDefaultApp, templates } from "./core/assets";
 // import { hasTouch } from "@web/core/browser/feature_detection";
 
 
-// Import services
-import "./webclient/menus/menu_service";
-import "./webclient/actions/action_service";
-
-// Import components
 
 /**
  * Function to start a webclient.

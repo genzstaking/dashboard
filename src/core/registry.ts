@@ -58,7 +58,7 @@ export class Registry extends EventBus {
      * @returns {Registry}
      */
     public add(key: string, value: any,
-        { force, sequence }: { force?: boolean, sequence?: number } = { force: false, sequence: undefined }): Registry {
+        { force, sequence }: { force?: boolean, sequence?: number } = { force: false, sequence: 50 }): Registry {
         if (!force && this.content.has(key)) {
             throw new DuplicatedKeyError(`Cannot add '${key}' in this registry: it already exists`);
         }
@@ -119,8 +119,9 @@ export class Registry extends EventBus {
      */
     public getEntries(): any[] {
         if (!this.entries) {
-            const entries = Object.entries(this.content).sort((el1, el2) => el1[1][0] - el2[1][0]);
-            this.entries = entries.map(([str, elem]) => [str, elem[1]]);
+            this.entries = [...this.content]
+                .sort((el1, el2) => el1[1][0] - el2[1][0])
+                .map(([str, elem]) => [str, elem[1]]);
         }
         return this.entries.slice();
     }

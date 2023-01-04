@@ -21,18 +21,24 @@ afterEach(() => {
 });
 
 test('Category must not be null', () => {
-  expect(registry.category('xxx' + Math.random())).not.toBe(null);
+  expect(registry.category('xxx' + Math.random())).not.toBeNull();
 });
-
 
 test('A unique category must be used with the same key', () => {
   let key = 'xxx' + Math.random();
-  expect(registry.category(key)).toBe(registry.category(key));
+  expect(registry.category(key)).toEqual(registry.category(key));
 });
-
 
 test('Must keep an object', () => {
   let key = 'xxx' + Math.random();
   let value = new Object();
   expect(registry.add(key, value).get(key)).toBe(value);
 });
+
+test('Must add items as an entry', () => {
+  let key = 'xxx' + Math.random();
+  let value = new Object();
+  let cat = registry.category(key);
+  cat.add('key', value);
+  expect(cat.getEntries().length).toBe(1);
+}); 

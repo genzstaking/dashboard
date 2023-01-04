@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-
     <t t-name="web.WebClient" owl="1">
         <t t-if="!state.fullscreen">
-            <NavBar/>
+            <div todo="replace with NavBar"/>
         </t>
-        <ActionContainer/>
-        <MainComponentsContainer/>
+        <div todo="replace with ActionContainer"/>  
+        <div todo="replace with MainComponentsContainer"/>
     </t>
-
 </templates>
