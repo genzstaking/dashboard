@@ -19,8 +19,6 @@ module.exports = function (env, argv) {
 				test: /.*\.(xml)$/,
 				exclude: /node_modules/,
 				use: [{
-					loader: 'raw-loader'
-				},{
 					loader: path.resolve(__dirname, 'webpack/qweb-loader.js')
 				}]
 			}, {
