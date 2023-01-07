@@ -31,7 +31,7 @@ export class Dashboard extends OPage {
 							<div class="col mr-2">
 								<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
 								CET</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">CoinEx Token</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">CoinEx</div>
 							</div>
 							<div class="col-auto">
 							<img src="${csc}" alt="logo" style="width:64px" class="ms-3"/>
@@ -53,7 +53,7 @@ export class Dashboard extends OPage {
 								<div class="h5 mb-0 font-weight-bold text-gray-800">MATIC</div>
 							</div>
 							<div class="col-auto">
-							<img src="${matic}" alt="logo" style="width:64px" class="ms-3"/>
+							<img src="${matic}" alt="logo" style="width:54px" class="ms-3"/>
 							</div>
 						</div>
 						<br/>
@@ -87,7 +87,7 @@ export class Dashboard extends OPage {
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
 								<div class="text-xs font-weight-bold  text-uppercase mb-1" style="color:#6d6df2;">
-								Avalanche (AVAX)</div>
+								Avalanche</div>
 								<div class="h5 mb-0 font-weight-bold text-gray-800">Avax</div>
 							</div>
 							<div class="col-auto">
