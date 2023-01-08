@@ -36,8 +36,7 @@ export class Topbar extends Component {
     
     
     
-    <div class="modal" 
-        id="selectProviderModal">
+    <div class="modal" id="selectProviderModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,21 +88,29 @@ export class Topbar extends Component {
         </div>
     </div>
     
-    <div class="modal" 
-        id="accountInfoModal">
+    <div class="modal" id="accountInfoModal">
         <div class="modal-dialog">
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <h5 class="modal-title text-dark">Account</h5>
-                    <button class="btn-close" 
-                        type="button"
-                        data-bs-dismiss="modal" />
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" />
                 </div>
-                <div class="modal-body d-flex flex-column flex-md-row align-content-center align-items-center">
-                    TODO: show account info
+
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Account</label>
+                            <span type="text" class="form-control disabled" id="recipient-name"><t t-out='wallet.account'/></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">CainId</label>
+                            <span type="text" class="form-control disabled" id="recipient-name"><t t-out='wallet.chainId'/></span>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
+        </div>        
     </div>`;
 
     wallet: Wallet;
@@ -112,6 +119,7 @@ export class Topbar extends Component {
 
     setup() {
         this.wallet = useWallet();
+        console.log(this.wallet)
         onMounted(() => {
             this.accountInfoModal = new Modal(document.getElementById('accountInfoModal'));
             this.selectProviderModal = new Modal(document.getElementById('selectProviderModal'));
