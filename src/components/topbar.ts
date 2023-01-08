@@ -1,13 +1,10 @@
-import { Component, xml, useState, onMounted } from "@odoo/owl";
-import Web3 from "web3";
+import { Component, onMounted } from "@odoo/owl";
 import { Modal } from "bootstrap";
-
 import { useWallet, Wallet } from "@web/core/wallet";
 
-import metamaskIcon from "@web/img/MetaMaskIcon.svg";
-import coinbase from "@web/img/Coinbase.svg";
-import logo from "@web/img/logo.svg";
- 
+import "./topbar.xml";
+import "./topbar.scss";
+
 export class Topbar extends Component {
 
     static template = xml`
