@@ -1,14 +1,13 @@
 /** @odoo-module **/
 import { makeEnv, startServices } from "./env";
-/* 
-import { legacySetupProm } from "./legacy/legacy_setup";
-import { mapLegacyEnvToWowlEnv } from "./legacy/utils";
-import { localization } from "@web/core/l10n/localization";
-import { session } from "@web/session";
-import { renderToString } from "./core/utils/render";
-import { setLoadXmlDefaultApp, templates } from "@web/core/assets";
-import { hasTouch } from "@web/core/browser/feature_detection";
- */
+// import { legacySetupProm } from "./legacy/legacy_setup";
+// import { mapLegacyEnvToWowlEnv } from "./legacy/utils";
+// import { localization } from "@web/core/l10n/localization";
+// import { session } from "@web/session";
+// import { renderToString } from "./core/utils/render";
+import { setLoadXmlDefaultApp, templates } from "./core/assets";
+// import { hasTouch } from "@web/core/browser/feature_detection";
+ 
 import { App, whenReady } from "@odoo/owl";
 
 /**
@@ -39,13 +38,13 @@ export async function startWebClient(Webclient) {
     // mapLegacyEnvToWowlEnv(legacyEnv, env);
     const app = new App(Webclient, {
         env,
-        // templates,
+        templates,
         dev: env.debug,
         translatableAttributes: ["data-tooltip"],
         translateFn: env._t,
     });
     // renderToString.app = app;
-    // setLoadXmlDefaultApp(app);
+    setLoadXmlDefaultApp(app);
     const root = await app.mount(document.body);
     const classList = document.body.classList;
     // if (localization.direction === "rtl") {

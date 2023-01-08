@@ -15,6 +15,12 @@ module.exports = function (env, argv) {
 		},
 		module: {
 			rules: [{
+				test: /.*\.(xml)$/,
+				exclude: /node_modules/,
+				use: [{
+					loader: path.resolve(__dirname, 'webpack/qweb-loader.js')
+				}]
+			},{
 				test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
 				exclude: /node_modules/,
 				use: [{

@@ -8,20 +8,10 @@ import { Dashboard } from "@web/pages/dashboard";
 import { CscStakingPage } from "@web/pages/csc";
 import { MaticStaking } from "@web/pages/polygon";
 import { FantomStaking } from "@web/pages/fantom";
-const ROOT_TEMPLATE = xml`
-<div id="wrapper">
-	<Sidebar />
-	<div id="content-wrapper" class="d-flex flex-column">
-		<div id="content">
-			<Topbar />
-			<Router
-				types="routeType" 
-				routes="routes" />
-		</div>
-		<Footer />
-	</div>
-</div>
-`;
+
+
+import "./webclient.scss";
+import "./webclient.xml";
 
 /**
  * State holder of the root Component
@@ -44,7 +34,7 @@ export class WebClient extends Component {
 		Router,
 	};
 
-	static template = ROOT_TEMPLATE;
+	static template = "web.WebClient";
 
 	state?: RootState;
 	routeType: string;
