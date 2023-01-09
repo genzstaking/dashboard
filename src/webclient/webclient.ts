@@ -8,6 +8,7 @@ import { Dashboard } from "@web/pages/dashboard";
 import { CscStakingPage } from "@web/pages/csc";
 import { MaticStaking } from "@web/pages/polygon";
 import { FantomStaking } from "@web/pages/fantom";
+import { AvaxStaking } from "../pages/avax";
 
 
 import "./webclient.scss";
@@ -44,7 +45,7 @@ export class WebClient extends Component {
 		this.routeType = 'hash';
 		this.state = useState(new RootState());
 		this.routes = [
-			Dashboard, CscStakingPage, MaticStaking, FantomStaking
+			Dashboard, CscStakingPage, MaticStaking, FantomStaking, AvaxStaking
 		];
 	}
 }
