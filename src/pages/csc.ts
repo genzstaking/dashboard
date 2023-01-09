@@ -7,9 +7,10 @@ import { xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet, switchChain } from "@web/core/wallet"
 import { OPage } from "@web/components/page";
 
-import img06 from "@web/img/csc.svg";
 import cetABI from "@web/data/csc-validators.json"
 
+import "./csc.xml";
+import "./csc.scss";
 
 const genzAdderss = "0xEAfF084e6da9aFE8EcAB4d85de940e7d3153296F";
 const testAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
@@ -21,123 +22,10 @@ const mainnetChainId = "0x34";
 
 
 export class CscStakingPage extends OPage {
+    static title = "Coinex Smart Coin";
+    static logo = "./img/csc.svg";
 	static route = '/staking/CSC';
-    static template = xml`
-	<div class="container-lg bg-white justify-content-center align-items-center">
-		<div class="row justify-content-center align-items-center">
-			<img class="figure-img img-fluid p-3" 
-				style="width:128px;"
-				src="${img06}" />
-		</div>
-
-		<div class="row p-5 justify-content-center align-items-center nav-justified ">
-        <!-- Nav tabs -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="stake-tab" data-bs-toggle="tab"
-                    data-bs-target="#stake" type="button" role="tab" aria-controls="stake"
-                    aria-selected="true"
-                    style="color:green;"
-                    >
-                    Stake
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="unstake-tab" data-bs-toggle="tab" 
-                    data-bs-target="#unstake" type="button" role="tab" aria-controls="unstake" 
-                    aria-selected="false"
-                    style="color:green;"
-                    >
-                    Unstake
-                </button>
-            </li>
-            </ul>
-        
-            <!-- Tab panes -->
-            <div class="tab-content justify-content-center align-items-center m-5">
-                <div class="tab-pane active" id="stake" role="tabpanel" aria-labelledby="stake-tab">     
-                    <div class="row justify-content-center align-items-center">
-                        <div class="card mb-5" 
-                            style="width: 800px; border: none; ">
-                            <div class="card-body">
-                                <h2 class="text-center">
-                                    <t t-if="wallet.chainId === '${mainnetChainId}'">Stake CET</t>
-                                    <t t-if="wallet.chainId === '${testnetChainId}'">Stake CET TestNet</t>
-                                    <t t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'">Not Connected/Unsupported Network !!</t>
-                                </h2> 
-                                <div class="p-2">
-                                    <div class="input-group justify-content-center align-items-center">
-                                        <input class="form-control"
-                                            id="myInp" 
-                                            placeholder="Enter Cet Amount" 
-                                            t-model="state.value"
-                                            type="number"
-                                            aria-label="Example text with two button addons" />
-                                        <button class="btn btn-outline-secondary text-center"
-                                        type="button">
-                                        <img class=""
-                                            src="${img06}" 
-                                            style="width: 16px" />
-                                        </button>
-                                    </div>
-                                </div> 
-                                <div class="d-flex flex-row justify-content-center align-items-center"
-                                id="actions">
-                                    <button class="btn btn-success text-white m-2"
-                                    t-on-click="stakeit"
-                                    t-if="wallet.chainId === '${mainnetChainId}' or wallet.chainId === '${testnetChainId}'"
-                                    id="stakeBtn">
-                                        <span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Stake <t t-esc="state.value" /> CET</span>
-                                        <span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Stake <t t-esc="state.value" /> CET Test</span>
-                                        <span t-if="state.staking"><span class="spinner-border spinner-grow spinner-grow-sm"
-                                            role="status" 
-                                            aria-hidden="true"></span>Loading...</span>
-                                    </button>
-                                    <button class="btn btn-success text-white m-2"
-                                        t-on-click="stakeit"
-                                        t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'"
-                                        id="switch-to-cet-network">
-                                        <span>Switch Network</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="unstake" role="tabpanel" aria-labelledby="unstake-tab"><div class="row justify-content-center align-items-center p-2 ml-5">
-                    <h2 class="text-center">
-                    <t t-if="wallet.chainId === '${mainnetChainId}'">Un-stake CET</t>
-                    <t t-if="wallet.chainId === '${testnetChainId}'">Un-stake CET Test Net</t>
-                    <t t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'">Not Connected/Unsupported Network !!</t>
-                    </h2> 
-                    <div class="card mb-3 " style="width: 700px; border: none;">
-                        <div class="card-body ">
-                            <div id="actions" class="d-flex flex-row justify-content-center align-items-center">
-                                <button class="btn btn-outline-success" 
-                                    t-on-click="unstakeit" 
-                                    t-if="wallet.chainId === '${mainnetChainId}' or wallet.chainId === '${testnetChainId}'"
-                                    id="unstakeBtn">
-                                    <span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Un-stake CET</span>
-                                    <span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Un-stake CET Test</span>
-                                    <span t-if="state.unstaking"><span class="spinner-border spinner-grow spinner-grow-sm"
-                                        role="status" 
-                                        aria-hidden="true"></span>Loading...</span>
-                                </button>
-                                <button class="btn btn-success text-white m-2"
-                                    t-on-click="stakeit"
-                                    t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'"
-                                    id="switch-to-cet-network">
-                                    <span>Switch Network</span>
-                                </button>
-                            </div>
-                        </div>
-                        <br/>
-                    </div>
-                </div>
-            </div>          
-        </div>
-    </div>
-</div>`;
+    static template = 'pages.csc';
 
     wallet = useWallet();
     state = useState({

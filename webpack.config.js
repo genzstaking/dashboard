@@ -15,16 +15,24 @@ module.exports = function (env, argv) {
 		},
 		module: {
 			rules: [{
-				test: /img\/.*\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+				test: /.*\.(xml)$/,
+				exclude: /node_modules/,
+				use: [{
+					loader: path.resolve(__dirname, 'webpack/qweb-loader.js')
+				}]
+			},{
+				test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
 				exclude: /node_modules/,
 				use: [{
 					loader: 'file-loader',
 					options: {
 						name: '[name].[ext]',
 						outputPath: 'img/'
-					},
-				}]
-			}, {
+						},
+					}
+				]
+			}, 
+			{
 				test: /\.tsx?$/,
 				use: 'babel-loader',
 				exclude: /node_modules/,
@@ -54,6 +62,7 @@ module.exports = function (env, argv) {
 					loader: 'sass-loader',
 					options: {
 						sourceMap: true,
+						additionalData: `@import "${path.resolve(__dirname, './src/variables.scss')}";`,
 					},
 				}]
 			}],
