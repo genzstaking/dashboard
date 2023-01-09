@@ -31,6 +31,9 @@ export class Topbar extends Component {
             <button class="btn btn-info text-white rounded-pill mx-2" 
                 t-if="wallet.unlocked"
                 t-on-click="showAccountInfo"><spam t-esc="wallet.account.slice(20)+'...'"/></button>
+            <button class="btn btn-info text-white rounded-pill mx-2" 
+            t-if="wallet.unlocked"
+            t-on-click="disconnect"><spam />disconnect</button>
         </div>
     </nav>
     
@@ -132,5 +135,9 @@ export class Topbar extends Component {
                 this.selectProviderModal.hide();
             });
     }
+    disconnect() {
+        this.wallet.disconnect();
+    }
+
 
 }
