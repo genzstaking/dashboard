@@ -1,5 +1,5 @@
 // Global styles
-import "./scss/main.scss";
+import "./main.scss";
 
 // Global services
 import "./core/browser/cookie_service";
