@@ -106,8 +106,9 @@ export class Registry extends EventBus {
      */
     public getAll(): any[] {
         if (!this.elements) {
-            const content = Object.values(this.content).sort((el1, el2) => el1[0] - el2[0]);
-            this.elements = content.map((elem) => elem[1]);
+            this.elements = [...this.content]
+                .sort((el1, el2) => el1[1][0] - el2[1][0])
+                .map(([str, elem]) =>  elem[1]);
         }
         return this.elements.slice();
     }

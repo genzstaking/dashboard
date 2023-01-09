@@ -8,6 +8,7 @@
                 <div id="content">
                     <Topbar />
                     <Router
+                        id="main"
                         types="routeType" 
                         routes="routes" />
                 </div>

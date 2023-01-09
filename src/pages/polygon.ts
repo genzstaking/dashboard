@@ -18,6 +18,8 @@ const mainnetChainId = "0x89";
 
 
 export class MaticStaking extends OPage {
+    static title = "Polygon (MATIC)";
+    static logo = "./img/matic.jpg";
 	static route = '/staking/matic';
     static template = 'pages.polygon';
 

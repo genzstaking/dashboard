@@ -14,7 +14,6 @@ export class Topbar extends Component {
 
     setup() {
         this.wallet = useWallet();
-        console.log(this.wallet)
         onMounted(() => {
             this.accountInfoModal = new Modal(document.getElementById('accountInfoModal'));
             this.selectProviderModal = new Modal(document.getElementById('selectProviderModal'));

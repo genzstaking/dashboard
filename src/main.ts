@@ -1,12 +1,10 @@
+// Global styles
+import "./scss/main.scss";
+
 // Global services
 import "./core/browser/cookie_service";
 import "./core/browser/router_service";
 import "./core/browser/title_service";
-
-// Global styles
-import "./scss/main.scss";
-
-
 
 /**
  * This part starts the webclient. It is in its own file to allow its replacement

@@ -22,6 +22,8 @@ const mainnetChainId = "0x34";
 
 
 export class CscStakingPage extends OPage {
+    static title = "Coinex Smart Coin";
+    static logo = "./img/csc.svg";
 	static route = '/staking/CSC';
     static template = 'pages.csc';
 

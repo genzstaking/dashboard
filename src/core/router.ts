@@ -1,9 +1,9 @@
 import {
 	Component,
 	xml,
-	useState,
-	onRendered
+	useState
 } from "@odoo/owl";
+import { registry } from "./registry";
 
 const TITLE_DEFAULT = "OWL Router";
 
@@ -49,7 +49,7 @@ export class Events {
 
 export class Router extends Component {
 	static template = xml`<t t-component="currentComponent"/>`;
-	static props = ["routes", "type"];
+	static props = ["routes", "type", "id"];
 	static defaultProps = {
 		type: ROUTER_TYPES.hash
 	}
@@ -80,6 +80,9 @@ export class Router extends Component {
 		this.listen().on("route", (evt: Event) => {
 			return this.render();
 		});
+
+		// add all rtoues to the registery
+		registry.category('routers').add(this.props.id, this);
 	}
 
 	get currentComponent() {

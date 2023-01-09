@@ -1,7 +1,12 @@
-import { Component } from "@odoo/owl";
+import {
+	Component,
+	useState,
+} from "@odoo/owl";
 import { v4 as uuidv4 } from 'uuid';
+import { registry } from "../core/registry";
 
 import "./sidebar.xml";
+import "./sidebar.scss";
 
 export class SidebarBrand extends Component {
 	static template = "components.sidebar.brand";
@@ -32,10 +37,6 @@ export class SidebarHeading extends Component {
 export class SidebarLink extends Component {
 	static template = "components.sidebar.link";
 	static props = ['title', 'href'];
-
-	public setup(): void {
-		// Todo check props
-	}
 }
 
 export class SidebarMessage extends Component {
@@ -52,4 +53,19 @@ export class Sidebar extends Component {
 		SidebarHeading,
 		SidebarCollapse,
 	};
+	state:{
+		routers: any[],
+	} = useState({
+		routers: [],
+	});
+
+
+	public setup(): void {
+		// Load all routs
+		this.state.routers = registry.category('routers').getAll();
+		registry.category('routers').addEventListener("UPDATE", () => {
+			this.state.routers = registry.category('routers').getAll();
+		});
+	}
+
 }

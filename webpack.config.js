@@ -62,6 +62,7 @@ module.exports = function (env, argv) {
 					loader: 'sass-loader',
 					options: {
 						sourceMap: true,
+						additionalData: `@import "${path.resolve(__dirname, './src/variables.scss')}";`,
 					},
 				}]
 			}],

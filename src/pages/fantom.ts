@@ -41,6 +41,8 @@ const mainnetChainId = "0xfa";
 
 
 export class FantomStaking extends OPage {
+    static title = "Fantom";
+    static logo = "./img/fantom.svg";
 	static route = '/staking/fantom';
     static template = 'pages.fantom';
 

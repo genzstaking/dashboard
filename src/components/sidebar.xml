@@ -6,11 +6,22 @@
             class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
             <SidebarBrand />
             <SidebarDivider />
-            <SidebarLink
-                href="'#/staking/CSC'">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Coinex Smart Coin</span>
-            </SidebarLink>
+
+            <t t-foreach="state.routers" t-key="props.id" t-as="router">
+                <t t-foreach="router.props.routes" t-key="route" t-as="page">
+                    <li class="nav-item active">
+                        <a class="nav-link" 
+                            t-att-href="'#' + page.route">
+                            <img 
+                                class="p-1"
+                                width="24px" 
+                                t-att-src="page.logo" />
+                            <spam t-esc="page.title" />
+                        </a>
+                    </li>
+                </t>
+            </t>
+
             <SidebarMessage>
                 <img 
                     class="sidebar-card-illustration mb-2" 
