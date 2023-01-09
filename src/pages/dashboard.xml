@@ -73,15 +73,15 @@
 							<div class="row no-gutters align-items-center">
 								<div class="col mr-2">
 									<div class="text-xs font-weight-bold  text-uppercase mb-1" style="color:#6d6df2;">
-									Avalanche</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">Avax</div>
+									GTON Capital</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">Staking GTON</div>
 								</div>
 								<div class="col-auto">
-								<img src="./img/avax.svg" alt="logo" style="width:64px" class="ms-3"/>
+								<img src="./img/sGTON.jpeg" alt="logo" style="width:64px; border-radius:5px" class="ms-3"/>
 								</div>
 							</div>
 							<br/>
-							<a href="#/staking/avax" class="btn btn" style="color:white;background-color:#6d6df2;">Stake avax</a>
+							<a href="#/staking/sGTON" class="btn btn" style="color:white;background-color:#6d6df2;">Stake sGTON</a>
 						</div>
 					</div>
 				</div>
