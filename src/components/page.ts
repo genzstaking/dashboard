@@ -1,4 +1,27 @@
 import { Component, useState } from "@odoo/owl";
+import { registry } from "../core/registry";
+
+export const route = (path: string) => {
+    return (target: any) => {
+        target.route = path;
+        registry.category('pages').add(path, target);
+    }
+}
+export const themplate = (name: string) => {
+    return (target: any) => {
+        target.template = name;
+    }
+}
+export const logo = (path: string) => {
+    return (target: any) => {
+        target.logo = path;
+    }
+}
+export const title = (title: string) => {
+    return (target: any) => {
+        target.title = title;
+    }
+}
 
 
 /**
@@ -6,7 +29,7 @@ import { Component, useState } from "@odoo/owl";
  * 
  * All pages must inherid directly from this component.
  */
-export class OPage extends Component {
+export abstract class OPage extends Component {
 
     pageInfo = useState({
         title: ""
@@ -23,4 +46,10 @@ export class OPage extends Component {
         // TODO: update title of the current page
         return this;
     }
+}
+
+
+export function usePage(path: string, page: any) {
+    // TODO;;
+    registry.category('pages').add(path, page);
 }

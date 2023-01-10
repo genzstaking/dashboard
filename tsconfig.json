@@ -5,6 +5,7 @@
         "sourceMap": true,
         "module": "es6",
         "target": "es5",
+        "experimentalDecorators": true,
         "jsx": "react",
         "allowJs": true,
         "moduleResolution": "node",

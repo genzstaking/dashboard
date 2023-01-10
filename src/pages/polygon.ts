@@ -1,11 +1,11 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet, switchChain } from "@web/core/wallet";
-import {OPage} from "@web/components/page";
 
 import MaticABI from "@web/data/polygon-matic.json"
 
 import "./polygon.xml";
 import "./polygon.scss";
+import { route , OPage, title, logo, themplate} from "../components/page";
 
 
 const genzAdderss = "0x5a1b57f87b59e093d332c945c66b602843099f97";
@@ -16,12 +16,11 @@ const testnetChainId = "0x13881";
 const mainnetChainId = "0x89";
 
 
-
+@route('/staking/matic')
+@title('Polygon (MATIC)')
+@logo('./img/matic.jpg')
+@themplate('pages.polygon')
 export class MaticStaking extends OPage {
-    static title = "Polygon (MATIC)";
-    static logo = "./img/matic.jpg";
-	static route = '/staking/matic';
-    static template = 'pages.polygon';
 
     wallet = useWallet();
     state = useState({

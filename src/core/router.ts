@@ -1,7 +1,8 @@
 import {
 	Component,
 	xml,
-	useState
+	useState,
+	onRendered
 } from "@odoo/owl";
 import { registry } from "./registry";
 
@@ -80,9 +81,6 @@ export class Router extends Component {
 		this.listen().on("route", (evt: Event) => {
 			return this.render();
 		});
-
-		// add all rtoues to the registery
-		registry.category('routers').add(this.props.id, this);
 	}
 
 	get currentComponent() {
@@ -165,13 +163,7 @@ export class Router extends Component {
 
 	private _findRoute(path: string, defaultRoute: any = null) {
 		// TODO: support path not fount component
-		let route = defaultRoute;
-		this.routes.forEach(page => {
-			if (page.route === path) {
-				route = page;
-			}
-		});
-		return route;
+		return registry.category('pages').get(path) || defaultRoute;
 	}
 
 	private _tryNav(href: string) {
@@ -204,3 +196,4 @@ export class Router extends Component {
 	}
 
 }
+

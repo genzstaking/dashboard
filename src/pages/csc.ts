@@ -11,6 +11,7 @@ import cetABI from "@web/data/csc-validators.json"
 
 import "./csc.xml";
 import "./csc.scss";
+import { logo, route, themplate, title } from "../components/page";
 
 const genzAdderss = "0xEAfF084e6da9aFE8EcAB4d85de940e7d3153296F";
 const testAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
@@ -20,12 +21,11 @@ const testnetChainId = "0x35";
 const mainnetChainId = "0x34";
 
 
-
+@route('/staking/CSC')
+@title('Coinex Smart Coin')
+@logo('./img/csc.svg')
+@themplate('pages.csc')
 export class CscStakingPage extends OPage {
-    static title = "Coinex Smart Coin";
-    static logo = "./img/csc.svg";
-	static route = '/staking/CSC';
-    static template = 'pages.csc';
 
     wallet = useWallet();
     state = useState({

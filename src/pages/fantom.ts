@@ -24,11 +24,11 @@ Symbol: FTM
 
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet, switchChain } from "@web/core/wallet";
-import {OPage} from "@web/components/page";
 
 import FantomABI from "@web/data/fantom.json"
 import "./fantom.xml";
 import "./fantom.scss";
+import { route, OPage, title, logo, themplate } from "../components/page";
 
 
 const genzAdderss = "0x5a1b57f87b59e093d332c945c66b602843099f97";
@@ -39,12 +39,11 @@ const testnetChainId = "0xfa2";
 const mainnetChainId = "0xfa";
 
 
-
+@route('/staking/fantom')
+@title('Fantom')
+@logo('./img/fantom.svg')
+@themplate('pages.fantom')
 export class FantomStaking extends OPage {
-    static title = "Fantom";
-    static logo = "./img/fantom.svg";
-	static route = '/staking/fantom';
-    static template = 'pages.fantom';
 
     wallet = useWallet();
     state = useState({

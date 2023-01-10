@@ -148,7 +148,7 @@ export class Registry extends EventBus {
         let category = this.subRegistries.get(subcategory);
         if (!category) {
             category = new Registry();
-            this.subRegistries.set(subcategory, new Registry());
+            this.subRegistries.set(subcategory, category);
         }
         return category;
     }

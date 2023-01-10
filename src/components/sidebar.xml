@@ -7,19 +7,17 @@
             <SidebarBrand />
             <SidebarDivider />
 
-            <t t-foreach="state.routers" t-key="props.id" t-as="router">
-                <t t-foreach="router.props.routes" t-key="route" t-as="page">
-                    <li class="nav-item active">
-                        <a class="nav-link" 
-                            t-att-href="'#' + page.route">
-                            <img 
-                                class="p-1"
-                                width="24px" 
-                                t-att-src="page.logo" />
-                            <spam t-esc="page.title" />
-                        </a>
-                    </li>
-                </t>
+            <t t-foreach="state.pages" t-key="rotue" t-as="page">
+                <li class="nav-item active">
+                    <a class="nav-link" 
+                        t-att-href="'#' + page.route">
+                        <img 
+                            class="p-1"
+                            width="24px" 
+                            t-att-src="page.logo" />
+                        <spam t-esc="page.title" />
+                    </a>
+                </li>
             </t>
 
             <SidebarMessage>

@@ -7,6 +7,7 @@ import { registry } from "../core/registry";
 
 import "./sidebar.xml";
 import "./sidebar.scss";
+import { OPage } from "./page";
 
 export class SidebarBrand extends Component {
 	static template = "components.sidebar.brand";
@@ -54,17 +55,17 @@ export class Sidebar extends Component {
 		SidebarCollapse,
 	};
 	state:{
-		routers: any[],
+		pages: OPage[],
 	} = useState({
-		routers: [],
+		pages: [],
 	});
 
 
 	public setup(): void {
 		// Load all routs
-		this.state.routers = registry.category('routers').getAll();
-		registry.category('routers').addEventListener("UPDATE", () => {
-			this.state.routers = registry.category('routers').getAll();
+		this.state.pages = registry.category('pages').getAll();
+		registry.category('pages').addEventListener("UPDATE", () => {
+			this.state.pages = registry.category('pages').getAll();
 		});
 	}
 

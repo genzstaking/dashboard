@@ -171,7 +171,7 @@ function _protectMethod(component, fn) {
 
         const prom = Promise.resolve(fn.call(this, ...args));
         const protectedProm = prom.then((result) =>
-            status(component) === "destroyed" ? new Promise(() => {}) : result
+            status(component) === "destroyed" ? new Promise(() => { }) : result
         );
         return Object.assign(protectedProm, {
             abort: prom.abort,

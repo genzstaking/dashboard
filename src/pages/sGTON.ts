@@ -1,9 +1,9 @@
 import { Component, xml, useState, reactive, useRef, } from "@odoo/owl";
 import { useContract, useWallet, switchChain } from "@web/core/wallet";
-import {OPage} from "@web/components/page";
+import { route, OPage, title, logo, themplate } from "../components/page";
+
 
 import sGTONABI from "@web/data/sGTON.json"
-
 import "./sGTON.xml";
 import "./sGTON.scss";
 
@@ -16,12 +16,11 @@ const testnetChainId = "0x1";
 const mainnetChainId = "0x1";
 
 
-
+@route('/staking/sGTON')
+@title('sGTON (sGTON)')
+@logo('./img/sGTON.jpeg')
+@themplate('pages.sGTON')
 export class sGTONStaking extends OPage {
-    static title = "sGTON (sGTON)";
-    static logo = "./img/sGTON.jpeg";
-	static route = '/staking/sGTON';
-    static template = 'pages.sGTON';
 
     wallet = useWallet();
     state = useState({
