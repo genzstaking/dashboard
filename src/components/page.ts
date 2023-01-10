@@ -22,6 +22,11 @@ export const title = (title: string) => {
         target.title = title;
     }
 }
+export const symbol = (name: string) => {
+    return (target: any) => {
+        target.symbol = name;
+    }
+}
 
 
 /**

@@ -28,7 +28,7 @@ import { useContract, useWallet, switchChain } from "@web/core/wallet";
 import FantomABI from "@web/data/fantom.json"
 import "./fantom.xml";
 import "./fantom.scss";
-import { route, OPage, title, logo, themplate } from "../components/page";
+import { route, OPage, title, logo, themplate, symbol } from "../components/page";
 
 
 const genzAdderss = "0x5a1b57f87b59e093d332c945c66b602843099f97";
@@ -43,6 +43,7 @@ const mainnetChainId = "0xfa";
 @title('Fantom')
 @logo('./img/fantom.svg')
 @themplate('pages.fantom')
+@symbol('FAT')
 export class FantomStaking extends OPage {
 
     wallet = useWallet();
