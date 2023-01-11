@@ -3,15 +3,13 @@ CSC Network
 
 
  */
-import { xml, useState, reactive, useRef, } from "@odoo/owl";
-import { useContract, useWallet, switchChain } from "@web/core/wallet"
-import { OPage } from "@web/components/page";
+import { useState } from "@odoo/owl";
+import { OPage, enableStaking, logo, route, symbol, themplate, title } from "../components/page";
+import { switchChain, useContract, useWallet } from "../core/wallet";
 
-import cetABI from "@web/data/csc-validators.json"
-
-import "./csc.xml";
+import cetABI from "../data/csc-validators.json";
 import "./csc.scss";
-import { logo, route, symbol, themplate, title } from "../components/page";
+import "./csc.xml";
 
 const genzAdderss = "0xEAfF084e6da9aFE8EcAB4d85de940e7d3153296F";
 const testAddress = "0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca";
@@ -26,6 +24,7 @@ const mainnetChainId = "0x34";
 @logo('./img/csc.svg')
 @themplate('pages.csc')
 @symbol('CET')
+@enableStaking()
 export class CscStakingPage extends OPage {
 
     wallet = useWallet();

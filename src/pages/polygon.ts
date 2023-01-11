@@ -1,6 +1,6 @@
 import { useState } from "@odoo/owl";
 import { switchChain, useContract, useWallet } from "../core/wallet";
-import { OPage, logo, route, symbol, themplate, title } from "../components/page";
+import { OPage, enableStaking, logo, route, symbol, themplate, title } from "../components/page";
 
 
 import MaticABI from "../data/polygon-matic.json";
@@ -21,6 +21,7 @@ const mainnetChainId = "0x89";
 @logo('./img/matic.jpg')
 @themplate('pages.polygon')
 @symbol('MATIC')
+@enableStaking()
 export class MaticStaking extends OPage {
 
     wallet = useWallet();

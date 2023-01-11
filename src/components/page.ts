@@ -27,7 +27,11 @@ export const symbol = (name: string) => {
         target.symbol = name;
     }
 }
-
+export const enableStaking = () => {
+    return (target: any) => {
+        target.enableStaking = true;
+    }
+}
 
 /**
  * Abstract Page 
