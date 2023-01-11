@@ -7,7 +7,7 @@ export const route = (path: string) => {
         registry.category('pages').add(path, target);
     }
 }
-export const themplate = (name: string) => {
+export const template = (name: string) => {
     return (target: any) => {
         target.template = name;
     }

@@ -4,7 +4,7 @@ CSC Network
 
  */
 import { useState } from "@odoo/owl";
-import { OPage, enableStaking, logo, route, symbol, themplate, title } from "../components/page";
+import { OPage, enableStaking, logo, route, symbol, template, title } from "../components/page";
 import { switchChain, useContract, useWallet } from "../core/wallet";
 
 import cetABI from "../data/csc-validators.json";
@@ -22,7 +22,7 @@ const mainnetChainId = "0x34";
 @route('/staking/CSC')
 @title('Coinex Smart Coin')
 @logo('./img/csc.svg')
-@themplate('pages.csc')
+@template('pages.csc')
 @symbol('CET')
 @enableStaking()
 export class CscStakingPage extends OPage {

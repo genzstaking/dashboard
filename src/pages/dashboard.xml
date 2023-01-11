@@ -10,7 +10,7 @@
 
 			<!-- Content Row -->
 			<div class="row">
-				<t t-foreach="state.pages" t-key="route" t-as="page">
+				<t t-foreach="state.pages" t-key="page.route" t-as="page">
 					<div t-if="page.enableStaking" class="col-xl-3 col-md-6 mb-4">
 						<div class="card border-left-success shadow h-100 py-2 ">
 							<div class="card-body">
@@ -31,9 +31,9 @@
 									</div>
 								</div>
 								<br/>
-								<a t-att-href="'#' + page.route" 
-									class="btn btn btn-success" 
-									style="color:white;">Stake CET</a>
+								<Button
+									color="'primary'"
+									href="'#' + page.route">Stake</Button>
 							</div>
 						</div>
 					</div>

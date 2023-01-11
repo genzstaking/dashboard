@@ -1,14 +1,15 @@
-import { xml, useState } from "@odoo/owl";
-import { OPage, route, themplate, title } from "../components/page";
+import { xml, useState, Component } from "@odoo/owl";
+import { OPage, route, template, title } from "../components/page";
+import { registry } from "../core/registry";
+import { Button } from "../core/buttons";
 
 import "./dashboard.xml";
-import { registry } from "../core/registry";
 
 @route('/')
 @title('Dashboard')
-@themplate('pages.dashboard')
-export class Dashboard extends OPage {
-	static components = {};
+@template('pages.dashboard')
+export class Dashboard extends Component {
+	static components = {Button};
 	state: {
 		pages: OPage[]
 	} = useState({
