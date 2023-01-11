@@ -31,6 +31,8 @@ export class MaticStaking extends Component {
         value: 0,
     });
 
+    testnetChainId: string;
+    mainnetChainId: string;
 
     /**
      * Stake the amount value from the input
@@ -38,6 +40,8 @@ export class MaticStaking extends Component {
      * @returns promise | undefinde
      */
     async stakeit() {
+        this.testnetChainId = testnetChainId;
+        this.mainnetChainId = mainnetChainId;
         if (this.state.staking || !this._checkChainId()) {
             await switchChain(mainnetChainId, 'Polygon', 'https://mainnet.infura.io/v3/')
             return;
