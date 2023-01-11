@@ -54,6 +54,8 @@ export class FantomStaking extends Component {
         value: 0,
     });
 
+    testnetChainId: string;
+    mainnetChainId: string;
 
     /**
      * Stake the amount value from the input
@@ -61,6 +63,8 @@ export class FantomStaking extends Component {
      * @returns promise | undefinde
      */
     async stakeit() {
+        this.testnetChainId = testnetChainId;
+        this.mainnetChainId = mainnetChainId;
         if (this.state.staking || !this._checkChainId()) {
             await switchChain(mainnetChainId, 'Fantom Opera', 'https://rpcapi.fantom.network/')
             return;
