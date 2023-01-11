@@ -1,7 +1,7 @@
 import { xml, useState, Component } from "@odoo/owl";
-import { OPage, route, template, title } from "../components/page";
-import { registry } from "../core/registry";
-import { Button } from "../core/buttons";
+import { OPage, route, template, title } from "../../components/page";
+import { registry } from "../../core/registry";
+import { Button } from "../../core/buttons";
 
 import "./dashboard.xml";
 
@@ -14,7 +14,7 @@ export class Dashboard extends Component {
 		pages: OPage[]
 	} = useState({
 		pages: []
-	})
+	});
 
 	public setup(): void {
 		// Load registerd pages

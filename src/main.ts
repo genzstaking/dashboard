@@ -6,12 +6,7 @@ import "./core/browser/cookie_service";
 import "./core/browser/router_service";
 import "./core/browser/title_service";
 
-
-import "./pages/dashboard";
-import "./pages/csc";
-import "./pages/fantom";
-import "./pages/polygon";
-import "./pages/sGTON";
+import "./pages";
 
 /**
  * This part starts the webclient. It is in its own file to allow its replacement
