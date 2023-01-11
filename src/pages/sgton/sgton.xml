@@ -5,7 +5,7 @@
 			<div class="row justify-content-center align-items-center">
 				<img class="figure-img img-fluid p-3" 
                 style="width:128px;border-radius:20px"
-                src="./img/sGTON.jpeg" />
+                src="./img/networks-logo/sgton.svg" />
 			</div>
 			<div class="row p-5 justify-content-center align-items-center nav-justified ">
 				<!-- Nav tabs -->
@@ -35,9 +35,9 @@
                                 style="width: 800px; border: none;">
 								<div class="card-body">
 									<h2 class="text-center">
-										<t t-if="wallet.chainId === '${mainnetChainId}'">Stake sGTON</t>
-										<t t-if="wallet.chainId === '${testnetChainId}'">Stake sGTON TestNet</t>
-										<t t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'">Not Connected/Unsupported Network !!</t>
+										<t t-if="wallet.chainId === mainnetChainId">Stake sGTON</t>
+										<t t-if="wallet.chainId === testnetChainId">Stake sGTON TestNet</t>
+										<t t-if="wallet.chainId !== mainnetChainId and wallet.chainId !== testnetChainId">Not Connected/Unsupported Network !!</t>
 									</h2>
 									<div class="p-2">
 										<div class="input-group justify-content-center align-items-center">
@@ -50,7 +50,7 @@
 											<button class="btn btn-outline-secondary text-center"
                                                 type="button">
 												<img class=""
-                                                    src="./img/sGTON.jpeg" 
+                                                    src="./img/networks-logo/sgton.svg" 
                                                     style="width: 16px" />
 											</button>
 										</div>
@@ -61,12 +61,12 @@
 										<button class="btn text-white m-2"
                                             style="background-color:#8247e5"
                                             t-on-click="stakeit"
-                                            t-if="wallet.chainId === '${mainnetChainId}' or wallet.chainId === '${testnetChainId}'"
+                                            t-if="wallet.chainId === mainnetChainId or wallet.chainId === testnetChainId"
                                             id="stakeBtn">
-											<span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Stake 
+											<span t-if="wallet.isConnected and wallet.chainId === mainnetChainId">Stake 
 												<t t-esc="state.value" /> sGTON
 											</span>
-											<span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Stake 
+											<span t-if="wallet.isConnected and wallet.chainId === testnetChainId">Stake 
 												<t t-esc="state.value" /> sGTON Test
 											</span>
 											<span t-if="state.staking">
@@ -78,7 +78,7 @@
 										<button class="btn text-white m-2"
                                             style="background-color:#8247e5"
                                             t-on-click="stakeit"
-                                            t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'"
+                                            t-if="wallet.chainId !== mainnetChainId and wallet.chainId !== testnetChainId"
                                             id="switch-to-sGTON-network">
 											<span>Switch Network</span>
 										</button>
@@ -90,9 +90,9 @@
 					<div class="tab-pane" id="unstake" role="tabpanel" aria-labelledby="unstake-tab">
 						<div class="row justify-content-center align-items-center p-2 ml-5">
 							<h2 class="text-center">
-								<t t-if="wallet.chainId === '${mainnetChainId}'">Un-stake sGTON</t>
-								<t t-if="wallet.chainId === '${testnetChainId}'">Un-stake sGTON Test Net</t>
-								<t t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'">Not Connected/Unsupported Network !!</t>
+								<t t-if="wallet.chainId === mainnetChainId">Un-stake sGTON</t>
+								<t t-if="wallet.chainId === testnetChainId">Un-stake sGTON Test Net</t>
+								<t t-if="wallet.chainId !== mainnetChainId and wallet.chainId !== testnetChainId">Not Connected/Unsupported Network !!</t>
 							<div class="p-2">
 										<div class="input-group justify-content-center align-items-center">
 											<input class="form-control"
@@ -117,10 +117,10 @@
 										<button class="btn btn-outline" 
                                             t-on-click="unstakeit" 
                                             style="border-color:#8247e5; color:#8247e5;"
-                                            t-if="wallet.chainId === '${mainnetChainId}' or wallet.chainId === '${testnetChainId}'"
+                                            t-if="wallet.chainId === mainnetChainId or wallet.chainId === testnetChainId"
                                             id="unstakeBtn">
-											<span t-if="wallet.isConnected and wallet.chainId === '${mainnetChainId}'">Un-stake sGTON</span>
-											<span t-if="wallet.isConnected and wallet.chainId === '${testnetChainId}'">Un-stake sGTON Test</span>
+											<span t-if="wallet.isConnected and wallet.chainId === mainnetChainId">Un-stake sGTON</span>
+											<span t-if="wallet.isConnected and wallet.chainId === testnetChainId">Un-stake sGTON Test</span>
 											<span t-if="state.unstaking">
 											<span class="spinner-border spinner-grow spinner-grow-sm"
                                                 role="status" 
@@ -129,7 +129,7 @@
 										<button class="btn  text-white m-2"
                                             t-on-click="stakeit"
                                             style="background-color:#8247e5"
-                                            t-if="wallet.chainId !== '${mainnetChainId}' and wallet.chainId !== '${testnetChainId}'"
+                                            t-if="wallet.chainId !== mainnetChainId and wallet.chainId !== testnetChainId"
                                             id="switch-to-sGTON-network">
 											<span>Switch Network</span>
 										</button>
