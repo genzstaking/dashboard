@@ -1,6 +1,6 @@
 import { Component, useState, xml } from "@odoo/owl";
 import { Footer } from "@web/components/footer";
-import { Sidebar } from "@web/components/sidebar";
+import { Sidebar } from "../core/sidebar";
 import { Navbar } from "../core/navbar";
 import { Router } from "@web/core/router";
 

@@ -3,11 +3,10 @@ import {
 	useState,
 } from "@odoo/owl";
 import { v4 as uuidv4 } from 'uuid';
-import { registry } from "../core/registry";
+import { registry } from "../registry";
 
 import "./sidebar.xml";
 import "./sidebar.scss";
-import { OPage } from "./page";
 
 export class SidebarBrand extends Component {
 	static template = "components.sidebar.brand";
@@ -55,7 +54,7 @@ export class Sidebar extends Component {
 		SidebarCollapse,
 	};
 	state:{
-		pages: OPage[],
+		pages: Component[],
 	} = useState({
 		pages: [],
 	});
