@@ -1,5 +1,5 @@
 import { Component, useState } from "@odoo/owl";
-import { enableStaking, logo, route, symbol, template, title } from "../../components/page";
+import { enableStaking, logo, route, symbol, template, title } from "../../core/pages";
 import { switchChain, useContract, useWallet } from "../../core/wallet";
 
 

@@ -1,5 +1,4 @@
-import { Component, useState } from "@odoo/owl";
-import { registry } from "../core/registry";
+import { registry } from "./registry";
 
 export const route = (path: string) => {
     return (target: any) => {
@@ -7,53 +6,34 @@ export const route = (path: string) => {
         registry.category('pages').add(path, target);
     }
 }
+
 export const template = (name: string) => {
     return (target: any) => {
         target.template = name;
     }
 }
+
 export const logo = (path: string) => {
     return (target: any) => {
         target.logo = path;
     }
 }
+
 export const title = (title: string) => {
     return (target: any) => {
         target.title = title;
     }
 }
+
 export const symbol = (name: string) => {
     return (target: any) => {
         target.symbol = name;
     }
 }
+
 export const enableStaking = () => {
     return (target: any) => {
         target.enableStaking = true;
-    }
-}
-
-/**
- * Abstract Page 
- * 
- * All pages must inherid directly from this component.
- */
-export abstract class OPage extends Component {
-
-    pageInfo = useState({
-        title: ""
-    });
-
-    /**
-     * Replace title of the page.
-     * 
-     * @param title of the current page
-     * @returns the current page
-     */
-    public setTitle(title: string): OPage {
-        this.pageInfo.title = title;
-        // TODO: update title of the current page
-        return this;
     }
 }
 
