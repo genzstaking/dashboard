@@ -5,6 +5,9 @@ import "./main.scss";
 import "./core/browser/cookie_service";
 import "./core/browser/router_service";
 import "./core/browser/title_service";
+import "./core/dialog/dialog_service";
+import "./core/hotkeys/hotkey_service";
+import "./core/ui/ui_service";
 
 import "./pages";
 
