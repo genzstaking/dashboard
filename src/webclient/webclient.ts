@@ -1,8 +1,8 @@
-import { Component, useState, xml } from "@odoo/owl";
-import { Footer } from "@web/components/footer";
-import { Sidebar } from "../core/sidebar";
+import { Component, useState } from "@odoo/owl";
+import { Footer } from "../core/footer";
 import { Navbar } from "../core/navbar";
-import { Router } from "@web/core/router";
+import { Router } from "../core/router";
+import { Sidebar } from "../core/sidebar";
 
 
 import "./webclient.scss";
