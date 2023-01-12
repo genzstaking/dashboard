@@ -1,11 +1,11 @@
 import { Component, onMounted } from "@odoo/owl";
 import { Modal } from "bootstrap";
-import { useWallet, Wallet } from "@web/core/wallet";
+import { useWallet, Wallet } from "../wallet";
 
-import "./topbar.xml";
-import "./topbar.scss";
+import "./navbar.xml";
+import "./navbar.scss";
 
-export class Topbar extends Component {
+export class Navbar extends Component {
     static template = "components.topbar";
 
     wallet: Wallet;
@@ -15,6 +15,7 @@ export class Topbar extends Component {
     setup() {
         this.wallet = useWallet();
         onMounted(() => {
+            // TODO: replace with dialog
             this.accountInfoModal = new Modal(document.getElementById('accountInfoModal'));
             this.selectProviderModal = new Modal(document.getElementById('selectProviderModal'));
         });

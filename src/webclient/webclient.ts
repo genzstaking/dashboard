@@ -1,7 +1,7 @@
 import { Component, useState, xml } from "@odoo/owl";
 import { Footer } from "@web/components/footer";
 import { Sidebar } from "@web/components/sidebar";
-import { Topbar } from "@web/components/topbar";
+import { Navbar } from "../core/navbar";
 import { Router } from "@web/core/router";
 
 
@@ -25,7 +25,7 @@ export class WebClient extends Component {
 	static components = {
 		Footer,
 		Sidebar,
-		Topbar,
+		Navbar,
 		Router,
 	};
 
