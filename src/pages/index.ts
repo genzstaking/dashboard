@@ -13,3 +13,4 @@ import "./csc";
 import "./fantom";
 import "./polygon";
 import "./sgton";
+import "./shardeum";

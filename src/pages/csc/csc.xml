@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="./dashboard.scss"?>
 <templates xml:space="preserve">
     <t t-name="pages.csc" owl="1">
         <div class="container-lg bg-white justify-content-center align-items-center">
