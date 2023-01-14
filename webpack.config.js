@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const host = "localhost";
 
@@ -20,7 +21,7 @@ module.exports = function (env, argv) {
 				use: [{
 					loader: path.resolve(__dirname, 'webpack/qweb-loader.js')
 				}]
-			},{
+			}, {
 				test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
 				exclude: /node_modules/,
 				use: [{
@@ -28,10 +29,10 @@ module.exports = function (env, argv) {
 					options: {
 						name: '[name].[ext]',
 						outputPath: 'img/'
-						},
-					}
+					},
+				}
 				]
-			}, 
+			},
 			{
 				test: /\.tsx?$/,
 				use: 'babel-loader',
@@ -84,6 +85,14 @@ module.exports = function (env, argv) {
 				inject: true,
 				template: path.resolve(__dirname, "public/index.html"),
 			}),
+			new CopyWebpackPlugin({
+				patterns: [{
+					from: 'public',
+					globOptions: {
+						ignore: ["**/*.html"],
+					}
+				}]
+			})
 		],
 	};
 };
