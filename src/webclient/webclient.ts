@@ -1,43 +1,42 @@
-import { Component, useState, xml } from "@odoo/owl";
-import { Footer } from "@web/components/footer";
-import { Sidebar } from "@web/components/sidebar";
-import { Topbar } from "@web/components/topbar";
-import { Router } from "@web/core/router";
+import { Component, useState } from "@odoo/owl";
+
+import { components, template } from "../core/components";
+import { Footer } from "../core/footer";
+import { MainComponentsContainer } from "../core/main_components_container";
+import { Router } from "../core/router";
+import { Sidebar } from "../core/sidebar";
+import { Navbar } from "./navbar";
 
 
 import "./webclient.scss";
 import "./webclient.xml";
 
 /**
- * State holder of the root Component
- */
-class RootState {
-	title: string;
-}
-
-/**
  * Root component of the application
  * 
  * This is the mani module and responsilbe to launch the app.
  */
+@components({
+	Footer,
+	Sidebar,
+	Navbar,
+	Router,
+	MainComponentsContainer
+})
+@template("web.WebClient")
 export class WebClient extends Component {
 
-	static components = {
-		Footer,
-		Sidebar,
-		Topbar,
-		Router,
+	state?: {
+		title: string
 	};
-
-	static template = "web.WebClient";
-
-	state?: RootState;
 	routeType: string;
 	routes: any;
 
 	public setup(): void {
 		this.routeType = 'hash';
-		this.state = useState(new RootState());
+		this.state = useState({
+			title: ''
+		});
 		this.routes = [];
 	}
 }

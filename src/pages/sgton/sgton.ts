@@ -3,7 +3,7 @@ TODO: add documents
 
 */
 import { Component, useState } from "@odoo/owl";
-import { enableStaking, logo, route, template, title } from "../../components/page";
+import { enableStaking, logo, route, template, title } from "../../core/pages";
 import { switchChain, useContract, useWallet } from "../../core/wallet";
 
 

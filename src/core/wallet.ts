@@ -130,6 +130,8 @@ function useContract(id:any, addr:any, abi:any) {
     }
     return new wallet.web3.eth.Contract(abi, addr);
 }
+
+
 async function switchChain(chainId, chainName, rpc){
     try {
         await window.ethereum.request({

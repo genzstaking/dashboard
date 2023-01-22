@@ -235,6 +235,7 @@ export function useChildRef() {
         defined = true;
     };
 }
+
 /**
  * Forwards the given refName to the parent by calling the corresponding
  * ForwardRef received as prop. @see useChildRef
@@ -243,14 +244,15 @@ export function useChildRef() {
  * @returns {{el: HTMLelement | null}} the same ref that is forwarded to the
  *  parent
  */
-export function useForwardRefToParent(refName) {
+export function useForwardRefToParent<T extends HTMLElement = HTMLElement>(refName):{el: T | null;} {
     const component = useComponent();
-    const ref = useRef(refName);
+    const ref : {el:T | null} = useRef(refName);
     if (component.props[refName]) {
         component.props[refName](ref);
     }
     return ref;
 }
+
 /**
  * Use the dialog service while also automatically closing the dialogs opened
  * by the current component when it is unmounted.

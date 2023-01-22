@@ -23,8 +23,8 @@ Symbol: FTM
 
 
 import { Component, useState } from "@odoo/owl";
+import { enableStaking, logo, route, symbol, template, title } from "../../core/pages";
 import { switchChain, useContract, useWallet } from "../../core/wallet";
-import { enableStaking, logo, route, symbol, template, title } from "../../components/page";
 
 import FantomABI from "./abi-fantom.json";
 import "./fantom.scss";
