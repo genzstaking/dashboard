@@ -23,11 +23,12 @@ https://etherscan.io/token/0xbebdab6da046bc49ffbb61fbd7b33157eb270d05#writeContr
 */
 import { Component, useState } from "@odoo/owl";
 import { switchChain, useContract, useWallet } from "../../core/wallet";
+import { enableStaking, logo, route, symbol, template, title } from "../../core/pages";
 
-
-import shardeumABI from "./abi-shardeum-shard.json";
 import "./shardeum.scss";
 import "./shardeum.xml";
+
+import shardeumABI from "./abi-shardeum-shard.json";
 
 
 const genzAdderss = "0x5a1b57f87b59e093d332c945c66b602843099f97"; //to be added
