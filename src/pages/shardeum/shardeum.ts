@@ -22,7 +22,6 @@ https://etherscan.io/token/0xbebdab6da046bc49ffbb61fbd7b33157eb270d05#writeContr
 
 */
 import { Component, useState } from "@odoo/owl";
-import { enableStaking, logo, route, symbol, template, title } from "../../components/page";
 import { switchChain, useContract, useWallet } from "../../core/wallet";
 
 
